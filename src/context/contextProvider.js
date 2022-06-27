@@ -6,7 +6,7 @@ export const contextProvider = ({children}) => {
         <Context.Provider value={{
             
         }}>
-
+           {children}     
         </Context.Provider>
     )
 }
