@@ -21,15 +21,17 @@ const firebaseConfig = {
 
     apiKey: "AIzaSyD1nYL7o_Mlw4HAzh5Ml5CU1mkuKzraNY8",
   
-    authDomain: "crwn-clothing-db-deb8b.firebaseapp.com",
+    authDomain: "hobbyt-6b5c6.firebaseapp.com",
   
-    projectId: "crwn-clothing-db-deb8b",
+    projectId: "hobbyt-6b5c6",
   
-    storageBucket: "crwn-clothing-db-deb8b.appspot.com",
+    storageBucket: "hobbyt-6b5c6.appspot.com",
   
-    messagingSenderId: "845523902922",
+    messagingSenderId: "842001819775",
   
-    appId: "1:845523902922:web:301ce157787d2f709fef33"
+    appId: "1:842001819775:web:a43733d4731f98d19e774a",
+
+    measurementId: "G-S80VK4QBKS"
   
   };
   
