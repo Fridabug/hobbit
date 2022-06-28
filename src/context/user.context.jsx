@@ -22,7 +22,9 @@ export const UserProvider = ({ children }) => {
             setCurrentUser(user);
             setLoading(false);
             if(user) navigate('/chats');
-        })
+        });
+
+        return auth;
     }, [currentUser, navigate])
 
     const value = { currentUser, setCurrentUser};
