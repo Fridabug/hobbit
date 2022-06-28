@@ -17,6 +17,7 @@ import {
 } from 'firebase/firestore';
 
 
+
 const firebaseConfig = {
 
     apiKey: "AIzaSyAibWkuGjiJ5ngOcKfThSuBLWb4ZH4Ph3Y",
@@ -49,7 +50,7 @@ const firebaseConfig = {
   export const signInWithGooglePopUp = () => signInWithPopup(auth, googleProvider);
   export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);
 
-  export const db = getFirestore();
+  export const db = getFirestore(firebaseApp);
 
   export const createUserDocumentFromAuth = async (userAuth, additionalInformation) => {
     if(!userAuth) return;
