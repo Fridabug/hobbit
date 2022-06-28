@@ -1,16 +1,16 @@
 import { createContext, useState } from 'react'
 
 export const SidebarContext = createContext({
-    isMatchesOpen: false,
-    setIsMatchesOpen: () => {},
+    isContactsOpen: true,
+    setIsContactsOpen: () => {},
     isMessagesOpen: false,
     setIsMessagesOpen: () => {},
 })
 
 export const SidebarProvider = ({ children }) => {
-    const [ isMatchesOpen, setIsMatchesOpen ] = useState(false);
+    const [ isContactsOpen, setIsContactsOpen ] = useState(true);
     const [ isMessagesOpen, setIsMessagesOpen ] = useState(false);
-    const value = { isMatchesOpen, setIsMatchesOpen, isMessagesOpen, setIsMessagesOpen };
+    const value = { isContactsOpen, setIsContactsOpen, isMessagesOpen, setIsMessagesOpen };
 
     return (
         <SidebarContext.Provider value={value}>{children}</SidebarContext.Provider>

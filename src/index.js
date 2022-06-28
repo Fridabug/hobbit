@@ -5,14 +5,17 @@ import App from './App';
 
 import { BrowserRouter } from 'react-router-dom';
 
-import { UserProvider } from './context/user.context'
+import { UserProvider } from './context/user.context';
+import { SidebarProvider } from './context/sidebar.context';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <UserProvider>
-        <App />
+        <SidebarProvider>
+          <App />
+        </SidebarProvider>
       </UserProvider>
     </BrowserRouter>
   </React.StrictMode>

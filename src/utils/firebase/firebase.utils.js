@@ -13,7 +13,8 @@ import {
   getFirestore,
   doc,
   getDoc,
-  setDoc
+  setDoc,
+  updateDoc
 } from 'firebase/firestore';
 
 
