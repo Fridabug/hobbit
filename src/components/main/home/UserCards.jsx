@@ -9,7 +9,6 @@ function UserCards() {
   return (
     <div>
       User List
-
         {
           users.map((user, key) => {
             return <div key={key}>{user.displayName}</div>
