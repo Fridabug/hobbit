@@ -12,7 +12,7 @@ function App() {
       <Sidebar/>
       <Routes>
         <Route path='/' element={<Authentication/>}/>
-        <Route path='/chat/:id' element={<Chat/>}/>
+        <Route path='/chats' element={<Chat/>}/>
         <Route path='/profile' element={<Profile/>}/>
         <Route/>
       </Routes>
