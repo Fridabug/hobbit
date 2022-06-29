@@ -5,12 +5,17 @@ import {ChatContext} from '../../../context/ChatProvider'
 
 
 function Dashboard() {
-  const {sender, receiver} = useContext(ChatContext);
+  const {sender, setSender, receiver, setReceiver} = useContext(ChatContext);
+
+  const handleChatClose = () => {
+    setSender(null);
+    setReceiver(null);
+  }
     
   return (
     <div className='dashboard-container' style={{display: 'flex'}}>
         <Sidebar style={{width: '15%', height: '100vh'}}/>
-        {sender && receiver && <Conversation />}
+        {sender && receiver && <Conversation handleChatClose={handleChatClose}/>}
     </div>
   )
 }
