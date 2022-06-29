@@ -3,11 +3,16 @@ import { onAuthStateChangedListener, createUserDocumentFromAuth, } from '../util
 import {useNavigate} from 'react-router-dom'
 
 
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../utils/firebase/firebase.utils';
+
 //actual value you want to access
 export const UserContext = createContext({
     createUser: null,
     setCurrentUser: () => null
 });
+
+const userCollection = collection(db, 'users');
 
 export const UserProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
@@ -18,17 +23,32 @@ export const UserProvider = ({ children }) => {
 
     console.log(currentUser, 'this current user');
 
+    // useEffect(() => {
+    //     const auth = onAuthStateChangedListener((user) => {
+    //         setCurrentUser(user);
+    //         setLoading(false);
+    //         if(user) navigate('/dashboard');
+    //     });
+
+    //     return auth;
+    // }, [currentUser, navigate])
+
+   
+
+    const [users, setUsers] = useState([]);
+    const value = { currentUser, setCurrentUser, users };
+    // const value = { currentUser, setCurrentUser, users };
+
     useEffect(() => {
-        const auth = onAuthStateChangedListener((user) => {
-            setCurrentUser(user);
-            setLoading(false);
-            if(user) navigate('/dashboard');
-        });
+        const getUsers = async () => {
+          const data = await getDocs(userCollection);
+          // console.log(data)
+          setUsers(data.docs.map((doc) => ({...doc.data(), id: doc.id})))
+        }
+  
+        getUsers()
+    }, [])
 
-        return auth;
-    }, [currentUser, navigate])
-
-    const value = { currentUser, setCurrentUser};
 
     useEffect(() => {
         const unsubscribe = onAuthStateChangedListener((user) => {
@@ -44,3 +64,5 @@ export const UserProvider = ({ children }) => {
 
     return <UserContext.Provider value={value} >{children}</UserContext.Provider>
 }
+
+
