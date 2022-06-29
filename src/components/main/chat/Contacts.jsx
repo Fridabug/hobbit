@@ -1,20 +1,20 @@
 import React, {useContext, useState, useEffect} from 'react'
 import {UserContext} from '../../../context/user.context'
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, getDoc, doc } from 'firebase/firestore';
 import { db } from '../../../utils/firebase/firebase.utils';
+import {ChatContext} from '../../../context/ChatProvider'
 
 
 
 function Contacts() {
 
-    const {currentUser} = useContext(UserContext);
+const {joinRoom} = useContext(ChatContext);
+const {currentUser} = useContext(UserContext);
 
-// const [currentUser, setCurrentUser] = useState(null);
 
 
 
     const [users, setUsers] = useState([]);
-    const value = { users };
     const userCollection = collection(db, 'users');
 
     useEffect(() => {
@@ -24,12 +24,17 @@ function Contacts() {
         }
   
         getUsers()
+        console.log(currentUser, 'current user')
     }, [])
 
-    console.log(users, 'users')
+
+    console.log(users, 'all users')
+
+
+    
   return (
     <div>{users.map((user, index) => <ul key={index}>
-      <li>{user.displayName ? user.displayName : user.email}</li>
+      <li onClick={()=>joinRoom(user.email)}>{user.displayName ? user.displayName : user.email}</li>
     </ul>)}</div>
   )
 }

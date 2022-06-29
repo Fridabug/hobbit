@@ -6,9 +6,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter } from 'react-router-dom';
 import {SocketProvider} from './context/SocketProvider'
 import { UserProvider } from './context/user.context'
-import {ContactsProvider} from './context/ContactsProvider';
-import {ConversationsProvider} from './context/ConversationsProvider'
 import { ContextProvider } from './context/contextProvider';
+import { ChatProvider } from './context/ChatProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -16,13 +15,11 @@ root.render(
     <BrowserRouter>
     <UserProvider>
       <SocketProvider>
-          <ContactsProvider>
-            <ConversationsProvider>
-              <ContextProvider>
+        <ChatProvider>
+            <ContextProvider>
               <App />
-              </ContextProvider>
-            </ConversationsProvider>
-          </ContactsProvider>
+            </ContextProvider>
+          </ChatProvider>
         </SocketProvider>
       </UserProvider>
     </BrowserRouter>
