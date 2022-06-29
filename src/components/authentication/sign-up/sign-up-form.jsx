@@ -11,7 +11,7 @@ import './sign-up-form.styles.scss'
 
 
 const defaultFormFields = {
-    displayName: '',
+    userName: '',
     email: '',
     password: '',
     confirmPassword: ''
@@ -19,7 +19,7 @@ const defaultFormFields = {
 export const SignUpForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
 
-    const { displayName, email, password, confirmPassword } = formFields;
+    const { userName, email, password, confirmPassword } = formFields;
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -43,7 +43,7 @@ export const SignUpForm = () => {
                 email, 
                 password
             );            
-            await createUserDocumentFromAuth(user, { displayName })
+            await createUserDocumentFromAuth(user, { userName })
             resetFormFields();
         } catch(error) {
             if(error.code === 'auth/email-already-in-use') {
@@ -61,9 +61,9 @@ export const SignUpForm = () => {
         <form onSubmit={handleSubmit}>
            
             <FormInput
-                label='Display Name' 
+                label='Username' 
                 type="text" 
-                name='displayName' 
+                name='userName' 
                 required 
                 defaultValue={email}
                 onChange={handleChange}
