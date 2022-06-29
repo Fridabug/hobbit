@@ -39,7 +39,8 @@ export const SignInForm = ( {handleGoogle} ) => {
         try {
             const { user } = await signInAuthWithEmailAndPassword(
                 email, 
-                password
+                password,
+               
             );
             resetFormFields();
         } catch(error) {

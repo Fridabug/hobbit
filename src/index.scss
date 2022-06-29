@@ -1,2 +1,14 @@
-@use './styling/mixins';
-@use './styling//variables';
+@use './styling/mixins' as *;
+@use './styling//variables' as *;
+
+*,
+*::after,
+*::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+:root {
+  font-family: $font-primary;
+}
+
