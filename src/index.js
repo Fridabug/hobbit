@@ -6,7 +6,10 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 
 import { UserProvider } from './context/user.context';
+<<<<<<< HEAD
 import { ContextProvider } from './context/contextProvider';
+=======
+>>>>>>> main
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
