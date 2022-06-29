@@ -16,12 +16,13 @@ export const UserProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate()
 
+    console.log(currentUser, 'this current user');
 
     useEffect(() => {
         const auth = onAuthStateChangedListener((user) => {
             setCurrentUser(user);
             setLoading(false);
-            if(user) navigate('/chats');
+            if(user) navigate('/dashboard');
         });
 
         return auth;

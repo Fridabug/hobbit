@@ -16,6 +16,8 @@ export function ConversationsProvider({ id, children }) {
         "conversations",
         []
     );
+    console.log(conversations, 'conversation')
+    
     const [selectedConversationIndex, setSelectedConversationIndex] =
         useState(0);
     const { contacts } = useContacts();
@@ -27,6 +29,13 @@ export function ConversationsProvider({ id, children }) {
             return [...prevConversations, { recipients, messages: [] }];
         });
     }
+
+    console.log(conversations, 'conversations');
+
+    // function deleteConversations(id) {
+    //     const updatedContacts = conversations.filter((contact) => contact.id !== id);
+    //     setConversations(updatedContacts)
+    // }
 console.log(conversations);
     const addMessageToConversation = useCallback(
         ({ recipients, text, sender }) => {
@@ -72,7 +81,7 @@ console.log(conversations);
     }, [socket, addMessageToConversation]);
 
     function sendMessage(recipients, text) {
-        //socket.emit("send-message", { recipients, text });
+        socket.emit("send-message", { recipients, text });
         console.log(socket);
 
         addMessageToConversation({ recipients, text, sender: id });

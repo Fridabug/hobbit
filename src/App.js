@@ -1,20 +1,18 @@
 import { Routes, Route } from 'react-router-dom';
-import Sidebar from './components/sidebar/Sidebar';
-// import Home from './components/main/home/Home';
-import Chat from './components/main/chat/Chat';
+import Dashboard from './components/main/chat/Dashboard';
 import Profile from './components/main/profile/Profile';
 import ToogleView from './components/toogleView/ToogleView';
 import Authentication from './components/authentication/authentication';
 
+
 function App() {
+ 
   return (
     <div className="App">
-      <Sidebar/>
       <Routes>
         <Route path='/' element={<Authentication/>}/>
-        <Route path='/chats' element={<Chat/>}/>
+        <Route path='/dashboard' element={<Dashboard/>}/>
         <Route path='/profile' element={<Profile/>}/>
-        <Route/>
       </Routes>
       <ToogleView/>
     </div>

@@ -1,27 +1,37 @@
-import React from "react";
-import { ListGroup } from "react-bootstrap";
-import { useContacts } from "../../../context/ContactsProvider";
+import React, {useContext, useState, useEffect} from 'react'
+import {UserContext} from '../../../context/user.context'
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../../../utils/firebase/firebase.utils';
 
-// export default function Contacts() {
-//     const { contacts } = useContacts();
 
-//     return (
-//         <ul variant="flush">
-//             {contacts.map((contact) => (
-//                 <li key={contact.id}>{contact.name}</li>
-//             ))}
-//         </ul>
-//     );
-// }
 
-export default function Contacts() {
-    const { contacts } = useContacts();
+function Contacts() {
 
-    return (
-        <ListGroup variant="flush">
-            {contacts.map((contact) => (
-                <ListGroup.Item key={contact.id}>{contact.name}</ListGroup.Item>
-            ))}
-        </ListGroup>
-    );
+    const {currentUser} = useContext(UserContext);
+
+// const [currentUser, setCurrentUser] = useState(null);
+
+
+
+    const [users, setUsers] = useState([]);
+    const value = { users };
+    const userCollection = collection(db, 'users');
+
+    useEffect(() => {
+        const getUsers = async () => {
+          const data = await getDocs(userCollection);
+          setUsers(data.docs.map((doc) => ({...doc.data(), id: doc.id})))
+        }
+  
+        getUsers()
+    }, [])
+
+    console.log(users, 'users')
+  return (
+    <div>{users.map((user, index) => <ul key={index}>
+      <li>{user.displayName ? user.displayName : user.email}</li>
+    </ul>)}</div>
+  )
 }
+
+export default Contacts

@@ -14,15 +14,15 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-    <SocketProvider>
       <UserProvider>
-        <ContactsProvider>
-        <ConversationsProvider>
-          <App />
-        </ConversationsProvider>
-        </ContactsProvider>
+      <SocketProvider>
+          <ContactsProvider>
+            <ConversationsProvider>
+              <App />
+            </ConversationsProvider>
+          </ContactsProvider>
+        </SocketProvider>
       </UserProvider>
-      </SocketProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

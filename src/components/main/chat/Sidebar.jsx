@@ -1,62 +1,38 @@
-// import React, { useState } from "react";
-// // import { Tab, Nav, Button, Modal } from "react-bootstrap";
-// import Conversations from "./Conversations";
-// import Contacts from "./Contacts";
-// import NewContactModal from "./NewContactModal";
-// import NewConversationModal from "./NewConversationModal";
-// import {NavLink} from 'react-router-dom'
+import { useContext } from 'react';
+import { Outlet } from 'react-router-dom';
+import { SidebarContext } from '../../../context/SidebarContext';
+import Conversation from './Conversation';
+import Contacts from './Contacts';
+import { auth } from '../../../utils/firebase/firebase.utils'
+import {useNavigate} from 'react-router-dom'
 
-// const CONVERSATIONS_KEY = "conversations";
-// const CONTACTS_KEY = "contacts";
+function Sidebar() {
+  const { isContactsOpen, setIsContactsOpen, setIsMessagesOpen } = useContext(SidebarContext);
+  const toggleIsContactsOpen = () => { setIsContactsOpen(true); setIsMessagesOpen(false) };
+  const toggleIsMessagesOpen = () => { setIsMessagesOpen(true); setIsContactsOpen(false) };
 
-// export default function Sidebar({ id }) {
-//     const [activeKey, setActiveKey] = useState(CONVERSATIONS_KEY);
-//     const [modalOpen, setModalOpen] = useState(false);
-//     const conversationsOpen = activeKey === CONVERSATIONS_KEY;
 
-//     function closeModal() {
-//         setModalOpen(false);
-//     }
+  const navigate = useNavigate();
 
-//     return (
-//         <div style={{ width: "250px" }} className="d-flex flex-column">
-//             <div activeKey={activeKey} onSelect={setActiveKey}>
-//                 <ul variant="tabs" className="justify-content-center">
-//                     <li>
-//                         <NavLink eventKey={CONVERSATIONS_KEY}>
-//                             Conversations
-//                         </NavLink>
-//                     </li>
-//                     <li>
-//                         <NavLink eventKey={CONTACTS_KEY}>Contacts</NavLink>
-//                     </li>
-//                 </ul>
-//                 <ul className="border-right overflow-auto flex-grow-1">
-//                     <li eventKey={CONVERSATIONS_KEY}>
-//                         <Conversations />
-//                     </li>
-//                     <li eventKey={CONTACTS_KEY}>
-//                         <Contacts />
-//                     </li>
-//                 </ul>
-//                 <div className="p-2 border-top border-right small">
-//                     Your Id: <span className="text-muted">{id}</span>
-//                 </div>
-//                 <button
-//                     onClick={() => setModalOpen(true)}
-//                     className="rounded-0"
-//                 >
-//                     New {conversationsOpen ? "Conversation" : "Contact"}
-//                 </button>
-//             </div>
+        const handleLogout = async () => {
+        await auth.signOut();
+        navigate('/');
+    }
 
-//             <div show={modalOpen} onHide={closeModal}>
-//                 {conversationsOpen ? (
-//                     <NewConversationModal closeModal={closeModal} />
-//                 ) : (
-//                     <NewContactModal closeModal={closeModal} />
-//                 )}
-//             </div>
-//         </div>
-//     );
-// }
+  return (
+    <div>
+      <div className='profile'></div>
+      <div className='exit-button'></div>
+      <div className='toggle-container'>
+        <div onClick={toggleIsContactsOpen}>Contacts</div>
+        <div onClick={toggleIsMessagesOpen}>Messages</div>
+      </div>
+      <div className='sidebar-content-container'>
+      {isContactsOpen ? <Contacts /> : <Conversation />}
+      <button onClick={handleLogout}>Logout</button>
+      </div>
+    <Outlet />
+    </div>
+  )
+}
+export default Sidebar

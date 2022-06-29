@@ -8,13 +8,14 @@ export function useSocket() {
 export function SocketProvider({ id, children }) {
 
 const {currentUser} = useContext(UserContext);
-
+// console.log(currentUser, 'store');
 
     const [socket, setSocket] = useState();
         useEffect(() => {
+            console.log(currentUser, 'currentUser')
             if(currentUser) {
                 const newSocket = io("https://hobbys-chat-engine.herokuapp.com", {
-                    query: { id: currentUser.id },
+                    query: { id: currentUser.uid },
         });
                 setSocket(newSocket);
                 return () => newSocket.close();
