@@ -14,19 +14,19 @@ function SearchBar() {
       const docRef = doc(db, "users", currentUser.uid)
       const getUser = async () => {
         const currentUserData = await getDoc(docRef)
-        const currentHobbies = currentUserData.data().hobbies
+        const currentHobbies = await currentUserData.data().userData.hobbies
         setHobbies(currentHobbies)
       }
-
       getUser()
     }
   }, [currentUser])
+  
 
  
   //handle change in the form
   const handleHobbyChange = (e) => {
       const { value, checked} = e.target;
-      let updatedArr = query;
+      let updatedArr = query.map(item => item.toLowerCase());
       !checked ? updatedArr = query.filter(hobby => hobby !== value) : updatedArr.push(value);
       setQuery(updatedArr)
       // console.log(updatedArr)

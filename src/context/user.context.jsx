@@ -67,13 +67,11 @@ export const UserProvider = ({ children }) => {
 
 
     // Hobbies
-    // const userCollection = collection(db, 'users');
-
-   
+      
     useEffect(() => {
         if(currentUser){
           const usersArr = users.filter(user => user?.userData?.hobbies?.some((hobby) => query.includes(hobby)))
-          console.log(usersArr)
+          console.log('usersArr: ', usersArr)
           setSortedUsers(usersArr)
         }
     }, [query])
