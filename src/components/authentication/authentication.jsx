@@ -10,10 +10,10 @@ const Authentication = () => {
     const {currentUser} = useContext(UserContext)
     return (
         <>
-        {!currentUser && <div className='authentication-container'>
+        <div className='authentication-container'>
         <SignInForm />
         <SignUpForm />
-    </div>}
+    </div>
         </>
     )
 }
