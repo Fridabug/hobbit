@@ -1,0 +1,10 @@
+.input-container {
+    display: flex;
+    flex-flow: column;
+}
+
+input {
+    margin: 10px 0;
+    padding: .3rem;
+    border-radius: 3px;
+}
