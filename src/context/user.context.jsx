@@ -17,24 +17,6 @@ const userCollection = collection(db, 'users');
 export const UserProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
 
-    //from eszter
-    const [loading, setLoading] = useState(true);
-    const navigate = useNavigate()
-
-    console.log(currentUser, 'this current user');
-
-    // useEffect(() => {
-    //     const auth = onAuthStateChangedListener((user) => {
-    //         setCurrentUser(user);
-    //         setLoading(false);
-    //         if(user) navigate('/dashboard');
-    //     });
-
-    //     return auth;
-    // }, [currentUser, navigate])
-
-   
-
     const [users, setUsers] = useState([]);
     const value = { currentUser, setCurrentUser, users };
     // const value = { currentUser, setCurrentUser, users };
@@ -64,5 +46,3 @@ export const UserProvider = ({ children }) => {
 
     return <UserContext.Provider value={value} >{children}</UserContext.Provider>
 }
-
-

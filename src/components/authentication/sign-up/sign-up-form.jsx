@@ -10,15 +10,15 @@ import Button from '../../button/button';
 import './sign-up-form.styles.scss';
 
 const defaultFormFields = {
-  displayName: '',
-  email: '',
-  password: '',
-  confirmPassword: '',
-};
+    displayName: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+}
 export const SignUpForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
 
-  const { displayName, email, password, confirmPassword } = formFields;
+    const { displayName, email, password, confirmPassword } = formFields;
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -32,39 +32,39 @@ export const SignUpForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (password !== confirmPassword) {
-      alert("Your passwords don't match!");
-      return;
-    }
-
-    try {
-      const { user } = await createUserAuthWithEmailAndPassword(
-        email,
-        password
-      );
-      await createUserDocumentFromAuth(user, { displayName });
-      resetFormFields();
-    } catch (error) {
-      if (error.code === 'auth/email-already-in-use') {
-        alert('Email already in use');
-      } else {
-        console.error(error);
-      }
-    }
-  };
+        if(password !== confirmPassword) {
+            alert("Your passwords don't match!");
+            return;
+        }
+        
+        try {
+            const { user } = await createUserAuthWithEmailAndPassword(
+                email, 
+                password
+            );            
+            await createUserDocumentFromAuth(user, { displayName })
+            resetFormFields();
+        } catch(error) {
+            if(error.code === 'auth/email-already-in-use') {
+                alert('Email already in use');
+            } else {
+                console.error(error);
+            }
+        };
+    };
 
   return (
     <div className='sign-up-container'>
-      <h2>Don't have an account?</h2>
-      <span>Sign up with your email and password</span>
-      <form onSubmit={handleSubmit}>
+        <h2>Register here</h2>
+        <form onSubmit={handleSubmit}>
+           
         <FormInput
-          label='Display Name'
-          type='text'
-          name='displayName'
-          required
-          defaultValue={email}
-          onChange={handleChange}
+            label='Username' 
+            type="text" 
+            name='displayName' 
+            required 
+            defaultValue={displayName}
+            onChange={handleChange}
         />
 
         <FormInput
