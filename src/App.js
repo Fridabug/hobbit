@@ -15,8 +15,8 @@ function App() {
   return (
     <div className='App'>
       <Routes>
-        <Route path='/' element={<Authentication />}/>
-        <Route path='/home' element={<Dashboard/>}/>
+        <Route path='/' element={<Authentication />} />
+        <Route path='/home' element={<Dashboard />} />
         <Route
           path='/profile'
           element={profileSwitch ? <Profile /> : <EditProfile />}

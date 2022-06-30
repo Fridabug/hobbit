@@ -3,6 +3,7 @@ import { useState, useContext } from 'react';
 import { SignUpForm } from './sign-up/sign-up-form';
 import { SignInForm } from './sign-in/sign-in-form';
 import Intro from './intro'
+import { UserContext } from '../../context/user.context';
 
 import Button from '../button/button';
 import PopUp from '../pop-up/pop-up';
