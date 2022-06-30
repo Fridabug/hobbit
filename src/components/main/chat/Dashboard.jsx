@@ -22,7 +22,7 @@ function Dashboard() {
     return (
         <div className="dashboard-container" style={{ display: "flex" }}>
             <Sidebar style={{ width: "15%", height: "100vh" }} />
-            {room && <Conversation handleChatClose={handleChatClose}/>}
+            {room ? <Conversation handleChatClose={handleChatClose}/> : <Home/>}
         </div>
     );
 }

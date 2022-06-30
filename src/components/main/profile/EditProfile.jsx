@@ -34,7 +34,7 @@ const EditProfile = () => {
       gettingUser();
     }
   }, [currentUser, showAge, url]);
-
+  console.log(currentUser);
   const onChangeEditHandler = (e) => {
     if (e.target.name.includes('hobby')) {
       setInputValue((pre) => ({
@@ -86,33 +86,18 @@ const EditProfile = () => {
     }
 
     const newArr = [
-      hobby1.current.value[0].toUpperCase() +
-        hobby1.current.value
-          .slice(1, hobby1.current.value.length)
-          .toLowerCase(),
-      hobby2.current.value[0].toUpperCase() +
-        hobby2.current.value
-          .slice(1, hobby2.current.value.length)
-          .toLowerCase(),
-      hobby3.current.value[0].toUpperCase() +
-        hobby3.current.value
-          .slice(1, hobby3.current.value.length)
-          .toLowerCase(),
-      hobby4.current.value[0].toUpperCase() +
-        hobby4.current.value
-          .slice(1, hobby4.current.value.length)
-          .toLowerCase(),
-      hobby5.current.value[0].toUpperCase() +
-        hobby5.current.value
-          .slice(1, hobby5.current.value.length)
-          .toLowerCase(),
+      hobby1.current.value,
+      hobby2.current.value,
+      hobby3.current.value,
+      hobby4.current.value,
+      hobby5.current.value,
     ];
     const hobbyArray = newArr.filter((item) => item.trim().length > 0);
     const updatedUser = userInfo;
 
     updatedUser.userData = {
       age: userAge,
-      image: url?.length > 0 ? url : userData.userData.image,
+      image: url?.length > 0 ? url : userData?.userData?.image,
       message:
         message.current.value.split(' ').join('').length > 30
           ? message.current.value
@@ -122,6 +107,7 @@ const EditProfile = () => {
     };
     const updateUser = async () => {
       const userDoc = doc(db, 'users', currentUser.uid);
+      console.log(userDoc);
       await updateDoc(userDoc, updatedUser);
     };
     updateUser();
@@ -152,7 +138,7 @@ const EditProfile = () => {
     maxMonth = '0' + maxMonth;
     minMonth = '0' + minMonth;
   }
-  console.log(userData?.userData);
+
   return userData ? (
     <div className='edit-profile'>
       <form onSubmit={onEditSubmitHandler}>
@@ -179,10 +165,7 @@ const EditProfile = () => {
             <div className='edit-profile-top__infos'>
               <h3>
                 {userData.displayName
-                  ? userData.displayName[0].toUpperCase() +
-                    userData.displayName
-                      .slice(1, userData.displayName.length)
-                      .toLowerCase()
+                  ? userData.displayName + userData.displayName
                   : 'Franko'}
                 ,
                 {userData.userData?.age ? (
@@ -224,7 +207,9 @@ const EditProfile = () => {
                       id={`hobby${item + 1}`}
                       placeholder={item === 0 ? 'Requierd' : 'Optional'}
                       defaultValue={
-                        userData.userData ? userData.userData.hobbies[item] : ''
+                        userData?.userData?.hobbies[item]
+                          ? userData.userData.hobbies[item]
+                          : ''
                       }
                       ref={
                         item === 0
@@ -252,7 +237,7 @@ const EditProfile = () => {
                 ref={message}
                 placeholder='You get more chance finding hobby partner if you have some bio (optional)'
               >
-                {userData.userData.message ? userData?.userData?.message : ''}
+                {userData?.userData?.message ? userData.userData.message : ''}
               </textarea>
             </div>
           </div>
