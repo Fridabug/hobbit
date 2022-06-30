@@ -6,6 +6,7 @@ import Contacts from './Contacts';
 import { auth } from '../../../utils/firebase/firebase.utils'
 import {useNavigate} from 'react-router-dom'
 import {UserContext} from '../../../context/user.context'
+import Button from '../../UI/Button';
 
 function Sidebar() {
   const { isContactsOpen, setIsContactsOpen, setIsMessagesOpen } = useContext(SidebarContext);
@@ -33,7 +34,7 @@ function Sidebar() {
       </div>
       <div className='sidebar-content-container'>
       {isContactsOpen ? <Contacts /> : <Conversation />}
-      <button onClick={handleLogout}>Logout</button>
+      <Button onClick={handleLogout} name="logout"/>
       </div>
     <Outlet />
     </div>
