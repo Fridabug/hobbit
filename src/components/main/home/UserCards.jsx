@@ -12,7 +12,7 @@ function UserCards() {
 
         {
           users.map((user, key) => {
-            return <div key={key}>{user.displayName}</div>
+            return <div key={key}>{user.displayName ? user.displayName : user.email}</div>
           })
         }
     </div>

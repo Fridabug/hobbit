@@ -9,6 +9,7 @@ import FormInput from '../../form-input/form-input'
 import Button from '../../button/button'
 
 import './sign-in-form.styles.scss'
+import {Link} from 'react-router-dom'
 
 
 const defaultFormFields = {
@@ -79,7 +80,7 @@ export const SignInForm = ( {handleGoogle} ) => {
                     value={password} 
                 />
                 <div className='buttons-container'>
-                    <Button buttonType={''} type='submit'>Sign In</Button>
+                  <Button buttonType={''} type='submit'>Sign In</Button>
                     <Button 
                         type='button'
                         onClick={signInWithGoogle} 
