@@ -6,22 +6,28 @@ import Home from './components/main/home/Home';
 import Chat from './components/main/chat/Chat';
 import Profile from './components/main/profile/Profile';
 import Authentication from './components/authentication/authentication';
-import Context from './context/contextProvider';
 import EditProfile from './components/main/profile/EditProfile';
+
+import Context from './context/contextProvider';
+import { UserContext } from './context/user.context'
 
 function App() {
   const { profileSwitch } = useContext(Context);
+  const { currentUser } = useContext(UserContext);
+
+
   return (
     <div className='App'>
-      <Sidebar />
       <Routes>
-      <Route path='/home' element={<Home/>}/>
+      { currentUser ? 
+        <Route path='/' element={<Home/>}/> :
         <Route path='/' element={<Authentication />} />
-        <Route path='/chat/:id' element={<Chat />} />
-        <Route
-          path='/profile'
-          element={profileSwitch ? <Profile /> : <EditProfile />}
-        />
+      }
+      <Route path='/chat/:id' element={<Chat />} />
+      <Route
+        path='/profile'
+        element={profileSwitch ? <Profile /> : <EditProfile />}
+      />
       </Routes>
     </div>
   );
