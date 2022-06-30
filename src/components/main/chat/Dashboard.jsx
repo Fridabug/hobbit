@@ -1,24 +1,31 @@
-import React, {useContext} from 'react'
-import Sidebar from './Sidebar'
-import Conversation from './Conversation'
-import {ChatContext} from '../../../context/ChatProvider'
-import Home from '../home/Home'
-
+import React, { useContext, useState, useEffect } from "react";
+import Sidebar from "./Sidebar";
+import Conversation from "./Conversation";
+import { ChatContext } from "../../../context/ChatProvider";
+import { UserContext } from "../../../context/user.context";
+import Home from "../home/Home";
 
 function Dashboard() {
-  const {sender, setSender, receiver, setReceiver} = useContext(ChatContext);
+    const [userInfo, setUserInfo] = useState(null);
+    const { sender, setSender, receiver, setReceiver } =
+        useContext(ChatContext);
+    const { currentUser } = useContext(UserContext);
+    const { room } = useContext(ChatContext);
+    const handleChatClose = () => {
+        setSender(null);
+        setReceiver(null);
+    };
 
-  const handleChatClose = () => {
-    setSender(null);
-    setReceiver(null);
-  }
-    
-  return (
-    <div className='dashboard-container' style={{display: 'flex'}}>
-        <Sidebar style={{width: '15%', height: '100vh'}}/>
-        {sender && receiver ? <Conversation handleChatClose={handleChatClose}/> : <Home/>}
-    </div>
-  )
+    useEffect(() => {
+        setUserInfo();
+    }, [currentUser]);
+
+    return (
+        <div className="dashboard-container" style={{ display: "flex" }}>
+            <Sidebar style={{ width: "15%", height: "100vh" }} />
+            {room && <Conversation />}
+        </div>
+    );
 }
 
-export default Dashboard
+export default Dashboard;

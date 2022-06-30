@@ -1,21 +1,36 @@
-import {useContext} from 'react'
+import { useState } from 'react';
+
 import { SignUpForm } from './sign-up/sign-up-form';
 import { SignInForm } from './sign-in/sign-in-form';
-import {UserContext} from '../../context/user.context'
+import Intro from './intro'
 
-import './authentication.styles.scss'
+import Button from '../button/button';
+import PopUp from '../pop-up/pop-up';
+
+import "./authentication.styles.scss";
 
 const Authentication = () => {
+    const [toggle, setToggle] = useState(false);
 
-    const {currentUser} = useContext(UserContext)
+    const togglePopUp = () => {
+        setToggle(!toggle)
+    }
+
+    console.log(toggle);
+
     return (
-        <>
-        {!currentUser && <div className='authentication-container'>
-        <SignInForm />
-        <SignUpForm />
-    </div>}
-        </>
+        <div className='authentication-container'>
+            <Intro />
+            <div className='form-container'>
+                <SignInForm />
+                <Button onClick={togglePopUp}>
+                    Register
+                </Button>
+                
+            </div>
+            { toggle ? <PopUp toggle={togglePopUp} content={<SignUpForm />}/> : null }
+        </div>
     )
 }
 
-export default Authentication
+export default Authentication;
