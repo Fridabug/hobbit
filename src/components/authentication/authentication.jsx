@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import PopUp from '../pop-up/pop-up';
 
 import { SignUpForm } from './sign-up/sign-up-form';
 import { SignInForm } from './sign-in/sign-in-form';
 import Intro from './intro'
 
 import Button from '../button/button';
+import PopUp from '../pop-up/pop-up';
 
 import './authentication.styles.scss'
 
@@ -33,4 +33,4 @@ const Authentication = () => {
     )
 }
 
-export default Authentication
+export default Authentication;

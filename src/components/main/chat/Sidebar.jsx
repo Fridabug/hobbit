@@ -1,18 +1,23 @@
 import { useContext } from 'react';
 import { Outlet } from 'react-router-dom';
-
-import { SidebarContext } from '../../context/sidebar.context';
-
-import Messages from './messages/messages';
-import Contacts from './contacts/contacts';
+import { SidebarContext } from '../../../context/SidebarContext';
+import Conversation from './Conversation';
+import Contacts from './Contacts';
+import { auth } from '../../../utils/firebase/firebase.utils'
+import {useNavigate} from 'react-router-dom'
 
 function Sidebar() {
-  const { isContactsOpen, setIsContactsOpen } = useContext(SidebarContext);
-  const { setIsMessagesOpen } = useContext(SidebarContext);
-
+  const { isContactsOpen, setIsContactsOpen, setIsMessagesOpen } = useContext(SidebarContext);
   const toggleIsContactsOpen = () => { setIsContactsOpen(true); setIsMessagesOpen(false) };
-
   const toggleIsMessagesOpen = () => { setIsMessagesOpen(true); setIsContactsOpen(false) };
+
+
+  const navigate = useNavigate();
+
+        const handleLogout = async () => {
+        await auth.signOut();
+        navigate('/');
+    }
 
   return (
     <div>
@@ -23,11 +28,11 @@ function Sidebar() {
         <div onClick={toggleIsMessagesOpen}>Messages</div>
       </div>
       <div className='sidebar-content-container'>
-      {isContactsOpen ? <Contacts /> : <Messages />}
+      {isContactsOpen ? <Contacts /> : <Conversation />}
+      <button onClick={handleLogout}>Logout</button>
       </div>
     <Outlet />
     </div>
   )
 }
-
 export default Sidebar

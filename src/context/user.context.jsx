@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from 'react';
-
 import { onAuthStateChangedListener, createUserDocumentFromAuth, } from '../utils/firebase/firebase.utils';
+import {useNavigate} from 'react-router-dom'
+
 
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../utils/firebase/firebase.utils';
@@ -15,8 +16,10 @@ const userCollection = collection(db, 'users');
 
 export const UserProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
+
     const [users, setUsers] = useState([]);
     const value = { currentUser, setCurrentUser, users };
+    // const value = { currentUser, setCurrentUser, users };
 
     useEffect(() => {
         const getUsers = async () => {
@@ -28,7 +31,6 @@ export const UserProvider = ({ children }) => {
         getUsers()
     }, [])
 
-    console.log(currentUser);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChangedListener((user) => {
@@ -41,7 +43,6 @@ export const UserProvider = ({ children }) => {
         return unsubscribe;
     }, [])
 
+
     return <UserContext.Provider value={value} >{children}</UserContext.Provider>
 }
-
-

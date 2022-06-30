@@ -1,9 +1,8 @@
 import { useContext } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import Sidebar from './components/sidebar/sidebar';
+import Dashboard from './components/main/chat/Dashboard';
 import Home from './components/main/home/Home';
-import Chat from './components/main/chat/Chat';
 import Profile from './components/main/profile/Profile';
 import Authentication from './components/authentication/authentication';
 import EditProfile from './components/main/profile/EditProfile';
@@ -23,11 +22,11 @@ function App() {
         <Route path='/' element={<Home/>}/> :
         <Route path='/' element={<Authentication />} />
       }
-      <Route path='/chat/:id' element={<Chat />} />
-      <Route
-        path='/profile'
-        element={profileSwitch ? <Profile /> : <EditProfile />}
-      />
+        <Route path='/dashboard' element={<Dashboard />} />
+        <Route
+          path='/profile'
+          element={profileSwitch ? <Profile /> : <EditProfile />}
+        />
       </Routes>
     </div>
   );
