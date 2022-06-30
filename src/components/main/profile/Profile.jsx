@@ -31,8 +31,8 @@ const Profile = ({ id }) => {
             </div>
             <div className='profile-top__infos'>
               <h3>
-                {userData?.displayName[0].toUpperCase() +
-                  userData?.displayName.slice(1, userData.length)}
+                {
+                  userData?.displayName}
                 , {userData?.userData?.age}
               </h3>
               {userData?.userData?.location}

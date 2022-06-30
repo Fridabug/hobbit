@@ -18,8 +18,11 @@ const Authentication = () => {
         setToggle(!toggle)
     }
 
-  
-  console.log(toggle);
+    // if(currentUser) {
+    //     window.location.replace('/home')
+    //   }
+
+    // console.log(toggle);
 
     return (
         <div className='authentication-container'>
