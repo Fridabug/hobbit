@@ -10,10 +10,9 @@ function Dashboard() {
     const { sender, setSender, receiver, setReceiver } =
         useContext(ChatContext);
     const { currentUser } = useContext(UserContext);
-    const { room } = useContext(ChatContext);
+    const { room, setRoom } = useContext(ChatContext);
     const handleChatClose = () => {
-        setSender(null);
-        setReceiver(null);
+        setRoom(null)
     };
 
     useEffect(() => {
@@ -23,7 +22,7 @@ function Dashboard() {
     return (
         <div className="dashboard-container" style={{ display: "flex" }}>
             <Sidebar style={{ width: "15%", height: "100vh" }} />
-            {room && <Conversation />}
+            {room && <Conversation handleChatClose={handleChatClose}/>}
         </div>
     );
 }

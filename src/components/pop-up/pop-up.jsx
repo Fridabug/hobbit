@@ -6,7 +6,7 @@ function PopUp({ toggle, content }) {
   return (
     <>
         <div className={ toggle ? 'dark' : null }></div>
-        <div className='modal'>
+        <div className='modal-one'>
             <div className='modal-content'>
                 <span className='close' onClick={toggle}>x</span>
                 <div>{content}</div>

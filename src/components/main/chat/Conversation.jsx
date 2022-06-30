@@ -14,7 +14,7 @@ function Conversation({ handleChatClose }) {
                 border: "1px solid black",
                 width: "100%",
             }}
-        >
+        >  <button onClick={handleChatClose} style={{width: '20px', alignSelf: 'flex-end'}}>X</button>
             <div>
                 {" "}
                 <span>To: {receiver}</span>
@@ -24,7 +24,6 @@ function Conversation({ handleChatClose }) {
                 style={{ border: "1px solid black", height: "100%" }}
             >
                 <div>Display Messages</div>
-
                 <div>
                     {room.messages?.map((msg, idx) => (
                         <div key={idx}>
