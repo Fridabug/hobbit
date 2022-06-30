@@ -3,10 +3,14 @@ import Sidebar from './Sidebar'
 import Conversation from './Conversation'
 import {ChatContext} from '../../../context/ChatProvider'
 import Home from '../home/Home'
+import {UserContext} from '../../../context/user.context'
 
 
 function Dashboard() {
   const {sender, setSender, receiver, setReceiver} = useContext(ChatContext);
+  const {currentUser} = useContext(UserContext);
+
+  
 
   const handleChatClose = () => {
     setSender(null);
