@@ -6,9 +6,8 @@ import { db } from '../../../utils/firebase/firebase.utils';
 function SearchBar() {
   const {currentUser} = useContext(UserContext);
   const [hobbies, setHobbies] = useState([])
-  console.log(currentUser)
-
-
+  
+  //get hobbies of current user
   useEffect(() => {
     if(currentUser){
       console.log(currentUser)
@@ -23,14 +22,20 @@ function SearchBar() {
     }
   }, [currentUser])
 
-  console.log(hobbies)
+ 
+  //handle change in the form
+  const handleHobbyChange = (e) => {
+      const { name, value } = e.target;
+      // console.log(name, value)
+  }
+
   return (
     <div>
       <form>
-        {hobbies.map((hobby) => {
+        {hobbies.map((hobby, i) => {
         return(
           <div>
-            <input type="checkbox" id={hobby} name={hobby}/>
+            <input type="checkbox" key={i} id={hobby} name="hobby" value={hobby} onClick={handleHobbyChange}/>
             <label for={hobby}>{hobby}</label>
           </div>
           )
