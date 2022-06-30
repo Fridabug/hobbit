@@ -31,8 +31,7 @@ const Profile = ({ id }) => {
             </div>
             <div className='profile-top__infos'>
               <h3>
-                {
-                  userData?.displayName}
+                {userData?.displayName}
                 , {userData?.userData?.age}
               </h3>
               {userData?.userData?.location}
