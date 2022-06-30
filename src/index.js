@@ -12,19 +12,17 @@ import { UserProvider } from './context/user.context'
 import { ContextProvider } from './context/contextProvider';
 import { ChatProvider } from './context/ChatProvider';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
     <BrowserRouter>
-    <UserProvider>
-      <SocketProvider>
-        <ChatProvider>
-            <ContextProvider>
-              <App />
-            </ContextProvider>
-          </ChatProvider>
-        </SocketProvider>
-      </UserProvider>
+        <UserProvider>
+            <SocketProvider>
+                <ChatProvider>
+                    <ContextProvider>
+                        <App />
+                    </ContextProvider>
+                </ChatProvider>
+            </SocketProvider>
+        </UserProvider>
     </BrowserRouter>
-  </React.StrictMode>
 );

@@ -7,7 +7,7 @@ import Intro from './intro'
 import Button from '../button/button';
 import PopUp from '../pop-up/pop-up';
 
-import './authentication.styles.scss'
+import "./authentication.styles.scss";
 
 const Authentication = () => {
     const [toggle, setToggle] = useState(false);
