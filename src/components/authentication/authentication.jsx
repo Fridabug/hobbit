@@ -8,7 +8,7 @@ import { UserContext } from '../../context/user.context';
 import Button from '../button/button';
 import PopUp from '../pop-up/pop-up';
 
-import './authentication.styles.scss'
+import "./authentication.styles.scss";
 
 const Authentication = () => {
     const { currentUser } = useContext(UserContext);
