@@ -8,21 +8,15 @@ import Authentication from './components/authentication/authentication';
 import EditProfile from './components/main/profile/EditProfile';
 
 import Context from './context/contextProvider';
-import { UserContext } from './context/user.context'
 
 function App() {
   const { profileSwitch } = useContext(Context);
-  const { currentUser } = useContext(UserContext);
-
 
   return (
     <div className='App'>
       <Routes>
-      { currentUser ? 
-        <Route path='/' element={<Home/>}/> :
-        <Route path='/' element={<Authentication />} />
-      }
-        <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/' element={<Authentication />}/>
+        <Route path='/home' element={<Dashboard/>}/>
         <Route
           path='/profile'
           element={profileSwitch ? <Profile /> : <EditProfile />}

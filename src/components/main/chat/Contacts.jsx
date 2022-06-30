@@ -1,8 +1,10 @@
 import React, {useContext, useState, useEffect} from 'react'
-import {UserContext} from '../../../context/user.context'
+
 import { collection, getDocs, getDoc, doc } from 'firebase/firestore';
 import { db } from '../../../utils/firebase/firebase.utils';
+
 import {ChatContext} from '../../../context/ChatProvider'
+import {UserContext} from '../../../context/user.context'
 
 
 
