@@ -2,7 +2,7 @@ import { createContext, useState } from 'react';
 
 const Context = createContext();
 export const ContextProvider = ({ children }) => {
-  const [profileSwitch, setProfileSwitch] = useState(false);
+  const [profileSwitch, setProfileSwitch] = useState(true);
   const onEditHandler = () => {
     setProfileSwitch((pre) => (pre = !pre));
   };
