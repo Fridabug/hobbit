@@ -6,6 +6,7 @@ import {
     doc,
     addDoc,
     deleteDoc,
+    updateDoc,
 } from "firebase/firestore";
 import { UserContext } from "./user.context";
 import { db } from "../utils/firebase/firebase.utils";
@@ -17,7 +18,7 @@ export const ChatContext = createContext();
 const socket = io("https://hobbys-chat-engine.herokuapp.com");
 export const ChatProvider = ({ children }) => {
     const [userData, setUserData] = useState(null);
-
+    const [roomID, setRoomID] = useState(null);
     const [room, setRoom] = useState(null);
     console.log(room, "ROOM");
     const [receiver, setReceiver] = useState(null);
@@ -38,24 +39,29 @@ export const ChatProvider = ({ children }) => {
             });
         });
     }, []);
-    console.log(room, "rooooooooooooom");
+    console.log(roomID, "roomID############");
+    console.log(room, "room#############################");
 
     const joinRoom = async (receiver) => {
         const chatsCol = collection(db, "chats");
         setReceiver(receiver);
         const chatSnapshot = await getDocs(chatsCol);
         const room = chatSnapshot.docs
-            .map((doc) => doc.data())
+            .map((doc) => {
+                const docID = doc.id;
+                return { doc: doc.data(), docID };
+            })
             .find(
                 (doc) =>
-                    (doc?.receiver === receiver &&
-                        doc?.sender === currentUser.email) ||
-                    (doc?.receiver === currentUser.email &&
-                        doc?.sender === receiver)
+                    (doc.doc?.receiver === receiver &&
+                        doc.doc?.sender === currentUser.email) ||
+                    (doc.doc?.receiver === currentUser.email &&
+                        doc.doc?.sender === receiver)
             );
 
         if (room) {
-            setRoom(room);
+            setRoom(room.doc);
+            setRoomID(room.docID);
             socket.emit("join_room", room.id);
             console.log(room, "find room");
         } else {
@@ -99,6 +105,8 @@ export const ChatProvider = ({ children }) => {
         };
         setRoom((state) => ({ ...state, messages: [...state.messages, data] }));
         e.target.reset();
+        const chatsCol = await doc(db, "chats", roomID);
+        await updateDoc(chatsCol, { messages: [...room.messages, data] });
         await socket.emit("send_message", data);
     };
 
@@ -110,7 +118,6 @@ export const ChatProvider = ({ children }) => {
         joinRoom,
         room,
         sendMessage,
-
         setRoom,
     };
     return (
