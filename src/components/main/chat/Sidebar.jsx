@@ -5,18 +5,23 @@ import Conversation from './Conversation';
 import Contacts from './Contacts';
 import { auth } from '../../../utils/firebase/firebase.utils'
 import {useNavigate} from 'react-router-dom'
+import {UserContext} from '../../../context/user.context'
+import Button from '../../UI/Button';
 
 function Sidebar() {
   const { isContactsOpen, setIsContactsOpen, setIsMessagesOpen } = useContext(SidebarContext);
   const toggleIsContactsOpen = () => { setIsContactsOpen(true); setIsMessagesOpen(false) };
   const toggleIsMessagesOpen = () => { setIsMessagesOpen(true); setIsContactsOpen(false) };
 
+  const {currentUser} = useContext(UserContext);
+
 
   const navigate = useNavigate();
 
         const handleLogout = async () => {
         await auth.signOut();
-        navigate('/');
+        console.log(currentUser);
+        navigate('/')
     }
 
   return (
@@ -29,7 +34,7 @@ function Sidebar() {
       </div>
       <div className='sidebar-content-container'>
       {isContactsOpen ? <Contacts /> : <Conversation />}
-      <button onClick={handleLogout}>Logout</button>
+      <Button onClick={handleLogout} name="logout"/>
       </div>
     <Outlet />
     </div>

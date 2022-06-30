@@ -3,7 +3,7 @@ import { onAuthStateChangedListener, createUserDocumentFromAuth, } from '../util
 import {useNavigate} from 'react-router-dom'
 
 
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs} from 'firebase/firestore';
 import { db } from '../utils/firebase/firebase.utils';
 
 //actual value you want to access

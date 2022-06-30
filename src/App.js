@@ -18,11 +18,8 @@ function App() {
   return (
     <div className='App'>
       <Routes>
-      { currentUser ? 
-        <Route path='/' element={<Home/>}/> :
         <Route path='/' element={<Authentication />} />
-      }
-        <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/home' element={<Dashboard />} />
         <Route
           path='/profile'
           element={profileSwitch ? <Profile /> : <EditProfile />}

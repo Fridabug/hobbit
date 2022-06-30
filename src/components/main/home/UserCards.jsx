@@ -1,5 +1,6 @@
 import React, {useContext, useState, useEffect} from 'react';
 import { UserContext } from "../../../context/user.context";
+import Card from '../../UI/Card';
 
 
 
@@ -11,7 +12,7 @@ function UserCards() {
       User List
         {
           sortedUsers.map((user, key) => {
-            return <div key={key}>{user.displayName}</div>
+            return <Card key={key}>{user.displayName}</Card>
           })
         }
     </div>
