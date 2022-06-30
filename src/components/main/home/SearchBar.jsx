@@ -4,8 +4,8 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from '../../../utils/firebase/firebase.utils';
 
 function SearchBar() {
-  const {currentUser} = useContext(UserContext);
-  const [hobbies, setHobbies] = useState([])
+  const {currentUser, setHobbies, hobbies, query, setQuery} = useContext(UserContext);
+ 
   
   //get hobbies of current user
   useEffect(() => {
@@ -25,9 +25,13 @@ function SearchBar() {
  
   //handle change in the form
   const handleHobbyChange = (e) => {
-      const { name, value } = e.target;
-      // console.log(name, value)
+      const { value, checked} = e.target;
+      let updatedArr = query;
+      !checked ? updatedArr = query.filter(hobby => hobby !== value) : updatedArr.push(value);
+      setQuery(updatedArr)
+      // console.log(updatedArr)
   }
+
 
   return (
     <div>
@@ -35,7 +39,7 @@ function SearchBar() {
         {hobbies.map((hobby, i) => {
         return(
           <div>
-            <input type="checkbox" key={i} id={hobby} name="hobby" value={hobby} onClick={handleHobbyChange}/>
+            <input type="checkbox" key={i} id={hobby} name="hobby" value={hobby} onClick={handleHobbyChange} defaultChecked={true}/>
             <label for={hobby}>{hobby}</label>
           </div>
           )
