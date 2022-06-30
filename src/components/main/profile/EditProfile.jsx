@@ -155,6 +155,7 @@ const EditProfile = () => {
                 alt=''
               />
               <input
+                required
                 type='file'
                 name='image'
                 id='image'
@@ -164,14 +165,12 @@ const EditProfile = () => {
             </div>
             <div className='edit-profile-top__infos'>
               <h3>
-                {userData.displayName
-                  ? userData.displayName + userData.displayName
-                  : 'Franko'}
-                ,
+                {userData.displayName ? userData.displayName : 'Franko'},
                 {userData.userData?.age ? (
                   userData.userData?.age
                 ) : (
                   <input
+                    required
                     type='date'
                     name='date'
                     id='date'
