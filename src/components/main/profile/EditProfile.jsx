@@ -1,13 +1,21 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import { UserContext } from '../../../context/user.context';
-import { db } from '../../../utils/firebase/firebase.utils';
-import { doc, updateDoc, getDoc, collection } from 'firebase/firestore';
+import { db, storage } from '../../../utils/firebase/firebase.utils';
+import { doc, updateDoc, getDoc } from 'firebase/firestore';
+import Context from '../../../context/contextProvider';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { v4 } from 'uuid';
+
 const EditProfile = () => {
   const { currentUser } = useContext(UserContext);
+  const { onEditHandler } = useContext(Context);
   const [userData, setUserData] = useState(null);
   const [userInfo, setUserInfo] = useState({ userData });
   const [inputValue, setInputValue] = useState({});
   const [showAge, setShowAge] = useState(false);
+  const [imageUpload, setImageUpload] = useState(false);
+  const [image, setImage] = useState(null);
+  const [url, setUrl] = useState(null);
   const hobby1 = useRef();
   const hobby2 = useRef();
   const hobby3 = useRef();
@@ -25,7 +33,7 @@ const EditProfile = () => {
       };
       gettingUser();
     }
-  }, [currentUser, showAge]);
+  }, [currentUser, showAge, url]);
 
   const onChangeEditHandler = (e) => {
     if (e.target.name.includes('hobby')) {
@@ -35,6 +43,24 @@ const EditProfile = () => {
       }));
     } else {
       setInputValue((pre) => ({ ...pre, [e.target.name]: e.target.value }));
+    }
+  };
+
+  const handleImageChange = (e) => {
+    if (e.target.files[0]) {
+      let newImg = e.target.files[0];
+      const imageRef = ref(storage, 'image' + v4());
+      uploadBytes(imageRef, newImg)
+        .then(() => {
+          getDownloadURL(imageRef)
+            .then((urlImg) => {
+              console.log(urlImg, 'urlImg');
+              setUrl(urlImg);
+            })
+            .catch((error) => console.log(error.message, 'error'));
+          setImage(null);
+        })
+        .catch((error) => console.log(error.message, 'error'));
     }
   };
   const onEditSubmitHandler = (e) => {
@@ -58,17 +84,35 @@ const EditProfile = () => {
         ? userAge--
         : userAge;
     }
+
     const newArr = [
-      hobby1.current.value,
-      hobby2.current.value,
-      hobby3.current.value,
-      hobby4.current.value,
-      hobby5.current.value,
+      hobby1.current.value[0].toUpperCase() +
+        hobby1.current.value
+          .slice(1, hobby1.current.value.length)
+          .toLowerCase(),
+      hobby2.current.value[0].toUpperCase() +
+        hobby2.current.value
+          .slice(1, hobby2.current.value.length)
+          .toLowerCase(),
+      hobby3.current.value[0].toUpperCase() +
+        hobby3.current.value
+          .slice(1, hobby3.current.value.length)
+          .toLowerCase(),
+      hobby4.current.value[0].toUpperCase() +
+        hobby4.current.value
+          .slice(1, hobby4.current.value.length)
+          .toLowerCase(),
+      hobby5.current.value[0].toUpperCase() +
+        hobby5.current.value
+          .slice(1, hobby5.current.value.length)
+          .toLowerCase(),
     ];
     const hobbyArray = newArr.filter((item) => item.trim().length > 0);
     const updatedUser = userInfo;
+
     updatedUser.userData = {
       age: userAge,
+      image: url?.length > 0 ? url : userData.userData.image,
       message:
         message.current.value.split(' ').join('').length > 30
           ? message.current.value
@@ -81,26 +125,66 @@ const EditProfile = () => {
       await updateDoc(userDoc, updatedUser);
     };
     updateUser();
+    onEditHandler();
   };
+
+  // Imageee upload
+
+  const maxDate = new Date(
+    new Date().setFullYear(new Date().getFullYear() - 18)
+  );
+  let maxDay = maxDate.getDate();
+
+  let maxMonth = maxDate.getMonth();
+
+  let maxYear = maxDate.getFullYear();
+  const minDate = new Date(
+    new Date().setFullYear(new Date().getFullYear() - 100)
+  );
+  let minDay = minDate.getDate();
+  let minMonth = minDate.getMonth();
+  let minYear = minDate.getFullYear();
+  if (+maxDay < 10) {
+    maxDay = '0' + maxDay;
+    minDay = '0' + minDay;
+  }
+  if (+maxMonth < 10) {
+    maxMonth = '0' + maxMonth;
+    minMonth = '0' + minMonth;
+  }
+  console.log(userData?.userData);
   return userData ? (
-    <div className='profile'>
+    <div className='edit-profile'>
       <form onSubmit={onEditSubmitHandler}>
-        <div className='profile'>
-          <div className='profile-top'>
-            <div className='profile-top__image'>
+        <div className='edit-profile'>
+          <div className='edit-profile-top'>
+            <div className='edit-profile-top__image'>
               {' '}
               <img
                 src={
-                  userData.image
-                    ? userData.image
-                    : 'http://jbusse.de/simple-site-map/Pictures/100000000000019D00000213BD56DAB0.png'
+                  userData?.userData?.image
+                    ? userData?.userData?.image
+                    : 'https://firebasestorage.googleapis.com/v0/b/hobbyt-6b5c6.appspot.com/o/image?alt=media&token=c23f0054-d453-4bf5-8a90-1209b823fd8f'
                 }
                 alt=''
               />
+              <input
+                type='file'
+                name='image'
+                id='image'
+                onChange={handleImageChange}
+                accept='image/png, image/gif, image/jpeg'
+              />
             </div>
-            <div className='profile-top__infos'>
+            <div className='edit-profile-top__infos'>
               <h3>
-                {userData.displayName ? userData.displayName : 'Franko'},
+                {userData.displayName
+                  ? userData.displayName[0].toUpperCase() +
+                    userData.displayName
+                      .slice(1, userData.displayName.length)
+                      .toLowerCase()
+                  : 'Franko'}
+                ,
                 {userData.userData?.age ? (
                   userData.userData?.age
                 ) : (
@@ -109,7 +193,8 @@ const EditProfile = () => {
                     name='date'
                     id='date'
                     ref={age}
-                    max='2000-12-13'
+                    min={`${minYear}-${minMonth}-${minDay}`}
+                    max={`${maxYear}-${maxMonth}-${maxDay}`}
                   />
                 )}
               </h3>
@@ -127,84 +212,39 @@ const EditProfile = () => {
               />
             </div>
           </div>
-          <div className='profile__hobbies'>
+          <div className='edit-profile__hobbies'>
             <ul>
-              <li>
-                <span>hobby1</span>
-                <input
-                  ref={hobby1}
-                  type='text'
-                  id='hobby1'
-                  onChange={onChangeEditHandler}
-                  placeholder='First hobby is required'
-                  defaultValue={
-                    userData.userData ? userData.userData.hobbies[0] : ''
-                  }
-                  name='hobby1'
-                  required
-                />
-              </li>
-
-              <li>
-                <span>hobby2</span>
-                <input
-                  type='text'
-                  id='hobby2'
-                  name='hobby2'
-                  onChange={onChangeEditHandler}
-                  placeholder='Optional'
-                  defaultValue={
-                    userData.userData ? userData.userData.hobbies[1] : ''
-                  }
-                  ref={hobby2}
-                />
-              </li>
-              <li>
-                <span>hobby3</span>
-                <input
-                  type='text'
-                  id='hobby3'
-                  name='hobby3'
-                  onChange={onChangeEditHandler}
-                  placeholder='Optional'
-                  defaultValue={
-                    userData.userData ? userData.userData.hobbies[2] : ''
-                  }
-                  ref={hobby3}
-                />
-              </li>
-              <li>
-                <span>hobby4</span>
-                <input
-                  type='text'
-                  id='hobby4'
-                  name='hobby4'
-                  onChange={onChangeEditHandler}
-                  placeholder='Optional'
-                  defaultValue={
-                    userData.userData ? userData.userData.hobbies[3] : ''
-                  }
-                  ref={hobby4}
-                />
-              </li>
-              <li>
-                <span>hobby5</span>
-                <input
-                  type='text'
-                  id='hobby5'
-                  name='hobby5'
-                  onChange={onChangeEditHandler}
-                  placeholder='Optional'
-                  defaultValue={
-                    userData.userData ? userData.userData.hobbies[4] : ''
-                  }
-                  ref={hobby5}
-                />
-              </li>
+              {Array.from(Array(5).keys()).map((item) => {
+                return (
+                  <li>
+                    <span>Hobby{item + 1}</span>
+                    <input
+                      type='text'
+                      name={`hobby${item + 1}`}
+                      id={`hobby${item + 1}`}
+                      placeholder={item === 0 ? 'Requierd' : 'Optional'}
+                      defaultValue={
+                        userData.userData ? userData.userData.hobbies[item] : ''
+                      }
+                      ref={
+                        item === 0
+                          ? hobby1
+                          : item === 1
+                          ? hobby2
+                          : item === 2
+                          ? hobby3
+                          : item === 3
+                          ? hobby4
+                          : item === 4 && hobby5
+                      }
+                    />
+                  </li>
+                );
+              })}
             </ul>
           </div>
-          <div className='profile__about'>
-            <div className='profile__about-text'>
+          <div className='edit-profile__about'>
+            <div className='edit-profile__about-text'>
               <h3>About Me:</h3>
               <textarea
                 onChange={onChangeEditHandler}
@@ -212,12 +252,12 @@ const EditProfile = () => {
                 ref={message}
                 placeholder='You get more chance finding hobby partner if you have some bio (optional)'
               >
-                {userData.message ? userData.message : ''}
+                {userData.userData.message ? userData?.userData?.message : ''}
               </textarea>
             </div>
           </div>
         </div>
-        <button type='submit'>Submit Changes</button>
+        <button type='submit'>Apply Changes</button>
       </form>
     </div>
   ) : null;
