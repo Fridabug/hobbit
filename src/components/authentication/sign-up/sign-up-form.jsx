@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   createUserDocumentFromAuth,
@@ -8,6 +8,7 @@ import {
 import FormInput from '../../form-input/form-input';
 import Button from '../../button/button';
 import './sign-up-form.styles.scss';
+import Context from '../../../context/contextProvider';
 
 const defaultFormFields = {
   displayName: '',
@@ -16,6 +17,7 @@ const defaultFormFields = {
   confirmPassword: '',
 };
 export const SignUpForm = () => {
+  const { onEditHandler } = useContext(Context);
   const [formFields, setFormFields] = useState(defaultFormFields);
 
   const { displayName, email, password, confirmPassword } = formFields;
@@ -46,6 +48,7 @@ export const SignUpForm = () => {
       );
       await createUserDocumentFromAuth(user, { displayName });
       navigate('/profile');
+      onEditHandler();
       resetFormFields();
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
