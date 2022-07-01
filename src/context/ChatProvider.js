@@ -24,6 +24,7 @@ export const ChatProvider = ({ children }) => {
   const [receiver, setReceiver] = useState(null);
   const [sender, setSender] = useState(null);
   const { currentUser } = useContext(UserContext);
+ 
 
   useEffect(() => {
     socket.on('receive_message', (data) => {
@@ -36,9 +37,11 @@ export const ChatProvider = ({ children }) => {
           ...state,
           messages: [...state.messages, data],
         };
+       
       });
     });
   }, []);
+
   console.log(roomID, 'roomID############');
   console.log(room, 'room#############################');
 
@@ -103,6 +106,7 @@ export const ChatProvider = ({ children }) => {
       date: new Date().toDateString(),
       sender: currentUser?.email,
     };
+    console.log(data, 'from sendMessage')
     setRoom((state) => ({ ...state, messages: [...state.messages, data] }));
     e.target.reset();
     const chatsCol = await doc(db, 'chats', roomID);
@@ -110,6 +114,9 @@ export const ChatProvider = ({ children }) => {
     await socket.emit('send_message', data);
   };
 
+  
+
+ 
   const value = {
     receiver,
     setReceiver,
@@ -119,6 +126,7 @@ export const ChatProvider = ({ children }) => {
     room,
     sendMessage,
     setRoom,
+    
   };
   return <ChatContext.Provider value={value}>{children}</ChatContext.Provider>;
 };

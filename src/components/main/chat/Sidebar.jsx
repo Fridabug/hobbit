@@ -12,17 +12,9 @@ import Button from "../../UI/Button";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../utils/firebase/firebase.utils";
 function Sidebar() {
-    const { isContactsOpen, setIsContactsOpen, setIsMessagesOpen } =
+    const { isContactsOpen } =
         useContext(SidebarContext);
-    const toggleIsContactsOpen = () => {
-        setIsContactsOpen(true);
-        setIsMessagesOpen(false);
-    };
-    const toggleIsMessagesOpen = () => {
-        setIsMessagesOpen(true);
-        setIsContactsOpen(false);
-    };
-
+   
     const { currentUser, sortedUsers } = useContext(UserContext);
 
     const navigate = useNavigate();
@@ -48,18 +40,10 @@ function Sidebar() {
     return (
         <div className="sidebar-wrapper">
             <div className="profile">
-                <img src={userData.userData.image} />
-                <h3>{userData.displayName} </h3>
+                <img src={userData?.userData.image} />
+                <h3>{userData?.displayName} </h3>
             </div>
             <div className="exit-button"></div>
-            <div className="toggle-container">
-                <div className="category-btn" onClick={toggleIsContactsOpen}>
-                    Contacts
-                </div>
-                <div className="category-btn" onClick={toggleIsMessagesOpen}>
-                    Messages
-                </div>
-            </div>
             {/* <div className="sidebar-content-container"> */}
             {isContactsOpen ? <Contacts /> : <Conversation />}
             <Button

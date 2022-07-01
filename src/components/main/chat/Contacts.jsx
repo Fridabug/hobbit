@@ -4,9 +4,10 @@ import { UserContext } from "../../../context/user.context";
 import { collection, getDocs, getDoc, doc } from "firebase/firestore";
 import { db } from "../../../utils/firebase/firebase.utils";
 import { ChatContext } from "../../../context/ChatProvider";
+import './contacts.styles.scss'
 
 function Contacts() {
-    const { joinRoom } = useContext(ChatContext);
+    const { joinRoom, clickedChatWhenNotSender } = useContext(ChatContext);
     const { currentUser } = useContext(UserContext);
 
     const [users, setUsers] = useState([]);
@@ -29,13 +30,13 @@ function Contacts() {
             {users
                 ?.filter((i) => i.email !== currentUser.email)
                 .map((user, index) => (
-                    <li
+                    <li 
                         key={index}
                         onClick={() => joinRoom(user.email)}
                         style={{ cursor: "pointer" }}
                         className="contacts-li"
                     >
-                        <img src={user.userData} />
+                        <img src={user.userData?.image} />
                         <p>
                             {console.log("userrrrrrr", user)}
                             {user.displayName ? user.displayName : user.email}

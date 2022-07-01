@@ -23,15 +23,7 @@ export const UserProvider = ({ children }) => {
 
     console.log(currentUser, 'this current user');
 
-    // useEffect(() => {
-    //     const auth = onAuthStateChangedListener((user) => {
-    //         setCurrentUser(user);
-    //         setLoading(false);
-    //         if(user) navigate('/dashboard');
-    //     });
-
-    //     return auth;
-    // }, [currentUser, navigate])
+  
 
     // hobbies of the current user
     const [hobbies, setHobbies] = useState([])
@@ -40,7 +32,10 @@ export const UserProvider = ({ children }) => {
     const [sortedUsers, setSortedUsers] = useState([]);
 
     const [users, setUsers] = useState([]);
-    const value = { currentUser, setCurrentUser, users, hobbies, setHobbies, query, setQuery, sortedUsers };
+
+    const [contacts, setContacts] = useState([]);
+
+    const value = { currentUser, setCurrentUser, users, hobbies, setHobbies, query, setQuery, sortedUsers, contacts, setContacts };
     // const value = { currentUser, setCurrentUser, users };
 
     useEffect(() => {
@@ -52,6 +47,7 @@ export const UserProvider = ({ children }) => {
   
         getUsers()
     }, [])
+
 
 
     useEffect(() => {
