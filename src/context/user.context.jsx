@@ -24,14 +24,19 @@ export const UserProvider = ({ children }) => {
     console.log(currentUser, 'this current user');
 
   
+    const [users, setUsers] = useState([]);
 
     // hobbies of the current user
     const [hobbies, setHobbies] = useState([])
     // Array of ticked checkboxes
     const [query, setQuery] = useState(hobbies)
-    const [sortedUsers, setSortedUsers] = useState([]);
 
-    const [users, setUsers] = useState([]);
+    const defaultSortedUsers = () => {
+       const filteredUsers =  users.filter(user => user?.userData?.hobbies?.some((hobby) => hobby))
+        return filteredUsers;
+    }
+    const [sortedUsers, setSortedUsers] = useState(defaultSortedUsers());
+
 
     const [contacts, setContacts] = useState([]);
 
@@ -67,7 +72,7 @@ export const UserProvider = ({ children }) => {
     useEffect(() => {
         if(currentUser){
           const usersArr = users.filter(user => user?.userData?.hobbies?.some((hobby) => query.includes(hobby)))
-          console.log('usersArr: ', usersArr)
+        //   console.log('usersArr: ', usersArr)
           setSortedUsers(usersArr)
         }
     }, [query])
