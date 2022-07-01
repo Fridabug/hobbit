@@ -5,9 +5,14 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    width: 100%;
+    width: 300px;
+    text-align: center;
 }
 
 .search-bar label {
     margin-left: .4rem;
+}
+
+input[type='checkbox'] {
+    accent-color: $primary;
 }
