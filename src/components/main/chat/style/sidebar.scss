@@ -1,0 +1,50 @@
+@import "../../../../styling/variables";
+.sidebar-wrapper {
+    border-right: 1px solid #000;
+    width: 22rem;
+    min-height: 98vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    .profile {
+        display: flex;
+        // flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        border-bottom: 1px solid #000;
+        img {
+            height: 100px;
+            border: solid 1px #000;
+            border-radius: 50%;
+            margin: 7px;
+        }
+    }
+    .toggle-container {
+        height: auto;
+        display: flex;
+        justify-content: space-between;
+
+        .category-btn {
+            position: relative;
+            background-color: $primary;
+            border: none;
+            margin: 10px;
+            font-size: 1rem;
+            color: $background;
+            padding: 0.5rem 1rem;
+            border-radius: 8%;
+            border-color: darken($primary, 10%);
+            text-align: center;
+            -webkit-transition-duration: 0.4s; /* Safari */
+            transition-duration: 0.6s;
+            text-decoration: none;
+            overflow: hidden;
+            cursor: pointer;
+        }
+    }
+    .sidebar-button {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+    }
+}
