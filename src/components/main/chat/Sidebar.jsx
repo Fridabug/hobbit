@@ -1,5 +1,6 @@
 import "./style/sidebar.scss";
 import { useContext, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { SidebarContext } from "../../../context/SidebarContext";
 import Conversation from "./Conversation";
@@ -12,10 +13,9 @@ import Button from "../../UI/Button";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../utils/firebase/firebase.utils";
 function Sidebar() {
-    const { isContactsOpen } =
-        useContext(SidebarContext);
-   
-    const { currentUser, sortedUsers } = useContext(UserContext);
+    const { isContactsOpen } = useContext(SidebarContext);
+
+    const { currentUser, sortedUsers, contacts } = useContext(UserContext);
 
     const navigate = useNavigate();
 
@@ -40,7 +40,9 @@ function Sidebar() {
     return (
         <div className="sidebar-wrapper">
             <div className="profile">
-                <img src={userData?.userData.image} />
+                <Link to="/profile">
+                    <img src={userData?.userData.image} />
+                </Link>
                 <h3>{userData?.displayName} </h3>
             </div>
             <div className="exit-button"></div>
@@ -51,7 +53,6 @@ function Sidebar() {
                 name="logout"
                 className="sidebar-button"
             />
-            {/* </div> */}
             <Outlet />
         </div>
     );

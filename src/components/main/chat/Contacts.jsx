@@ -4,15 +4,15 @@ import { UserContext } from "../../../context/user.context";
 import { collection, getDocs, getDoc, doc } from "firebase/firestore";
 import { db } from "../../../utils/firebase/firebase.utils";
 import { ChatContext } from "../../../context/ChatProvider";
-import './contacts.styles.scss'
-
+import "./contacts.styles.scss";
+import { BsFillTrashFill } from "react-icons/bs";
 function Contacts() {
-    const { joinRoom, clickedChatWhenNotSender } = useContext(ChatContext);
-    const { currentUser } = useContext(UserContext);
+    const { joinRoom, clickedChatWhenNotSender, setRoom } =
+        useContext(ChatContext);
+    const { currentUser, contacts, setContacts } = useContext(UserContext);
 
     const [users, setUsers] = useState([]);
     const userCollection = collection(db, "users");
-
     useEffect(() => {
         const getUsers = async () => {
             const data = await getDocs(userCollection);
@@ -20,17 +20,20 @@ function Contacts() {
         };
 
         getUsers();
-        console.log(currentUser, "current user");
     }, []);
 
-    console.log(users, "all users");
-
+    const handleDeleteFromContacts = (index) => {
+        const updatedContacts = contacts.filter((contact, i) => index !== i);
+        setContacts(updatedContacts);
+        // setRoom(false);
+    };
+    console.log(contacts);
     return (
         <ul>
-            {users
+            {contacts
                 ?.filter((i) => i.email !== currentUser.email)
                 .map((user, index) => (
-                    <li 
+                    <li
                         key={index}
                         onClick={() => joinRoom(user.email)}
                         style={{ cursor: "pointer" }}
@@ -38,9 +41,11 @@ function Contacts() {
                     >
                         <img src={user.userData?.image} />
                         <p>
-                            {console.log("userrrrrrr", user)}
                             {user.displayName ? user.displayName : user.email}
                         </p>
+                        <button onClick={() => handleDeleteFromContacts(index)}>
+                            <BsFillTrashFill className="btn-trash-icon" />
+                        </button>
                     </li>
                 ))}
         </ul>

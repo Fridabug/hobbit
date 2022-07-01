@@ -14,9 +14,15 @@ function Conversation({ handleChatClose }) {
                 border: "1px solid black",
                 width: "100%",
             }}
-        >  <button onClick={handleChatClose} style={{width: '20px', alignSelf: 'flex-end'}}>X</button>
+        >
+            {" "}
+            <button
+                onClick={handleChatClose}
+                style={{ width: "20px", alignSelf: "flex-end" }}
+            >
+                X
+            </button>
             <div>
-                {" "}
                 <span>To: {receiver}</span>
             </div>
             <div
@@ -34,7 +40,6 @@ function Conversation({ handleChatClose }) {
                             |
                             {typeof msg?.date === "string" && (
                                 <span style={{ fontSize: 10 }}>
-                                    {" "}
                                     {msg?.date}
                                 </span>
                             )}
