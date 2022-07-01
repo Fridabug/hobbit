@@ -19,6 +19,8 @@ import {
   updateDoc
 } from 'firebase/firestore';
 
+import shortid from 'shortid';
+
 const firebaseConfig = {
   apiKey: 'AIzaSyAibWkuGjiJ5ngOcKfThSuBLWb4ZH4Ph3Y',
 
@@ -72,6 +74,7 @@ export const createUserDocumentFromAuth = async (
         email,
         createdAt,
         ...additionalInformation,
+        id: shortid.generate()
       });
     } catch (error) {
       console.log('error creating the user', error.message);

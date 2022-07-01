@@ -5,13 +5,16 @@ import Card from '../../UI/Card';
 
 
 function UserCards() {
-  const {currentUser, sortedUsers} = useContext(UserContext);
+  const {currentUser, sortedUsers, contacts, setContacts} = useContext(UserContext);
+
   
   return (
     <div className='card-container'>
       {
         sortedUsers?.filter((i) => i.email !== currentUser.email).map((user, key) => {
-          return <Card key={key} name={user.displayName} imgUrl={user.userData.image} hobbies={user.userData.hobbies} >{user.displayName} </Card>
+          // console.log(user.id)
+          return <Card key={key} name={user.displayName} imgUrl={user.userData.image} hobbies={user.userData.hobbies} contactId={user.id}>{user.displayName}</Card>
+    
         })
       }
     </div>
