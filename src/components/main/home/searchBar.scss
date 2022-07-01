@@ -1,0 +1,13 @@
+@import '../../../styling/variables';
+
+.search-bar {
+    height: 3rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+
+.search-bar label {
+    margin-left: .4rem;
+}
