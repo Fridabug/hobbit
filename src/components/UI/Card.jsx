@@ -11,7 +11,7 @@ function Card({imgUrl, name, text, hobbies, contactId}) {
     const updatedContacts = contacts.reduce((acc, item) => {
       return item.id === e.target.id ? acc.push(item.id) : acc
     }, []);
-    setContacts(updatedContacts);
+    setContacts([...updatedContacts, contactId]);
 }
 
 console.log(contacts);
@@ -28,7 +28,7 @@ console.log(contacts);
       </div>
     </div>
       <Button name="show profile" className="card-btn"/>
-      <Button name='chat' className='card-btn' id={contactId} onClick={addContactHandler}>Chat</Button>
+      <Button name='chat' className='card-btn' id={contactId} onClick={(e) => addContactHandler(e)}>Chat</Button>
   </div>
    
   )
