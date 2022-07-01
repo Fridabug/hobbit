@@ -12,7 +12,7 @@ function UserCards() {
       User List
         {
           sortedUsers.map((user, key) => {
-            return <Card key={key}>{user.displayName}</Card>
+            return <Card key={key} name={user.displayName} imgUrl={user.userData.image}>{user.displayName} </Card>
           })
         }
     </div>
