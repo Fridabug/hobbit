@@ -18,8 +18,8 @@ export const UserProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
 
     //from eszter
-    const [loading, setLoading] = useState(true);
-    const navigate = useNavigate()
+    // const [loading, setLoading] = useState(true);
+    // const navigate = useNavigate()
 
     console.log(currentUser, 'this current user');
 
@@ -69,6 +69,10 @@ export const UserProvider = ({ children }) => {
 
     // Hobbies
       
+    useEffect(() => {
+        setQuery(query);
+    }, [])
+
     useEffect(() => {
         if(currentUser){
           const usersArr = users.filter(user => user?.userData?.hobbies?.some((hobby) => query.includes(hobby)))

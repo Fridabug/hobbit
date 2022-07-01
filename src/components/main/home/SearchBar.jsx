@@ -16,14 +16,12 @@ function SearchBar() {
       const getUser = async () => {
         const currentUserData = await getDoc(docRef)
         const currentHobbies = await currentUserData.data().userData.hobbies
-        setHobbies(currentHobbies)
+        setHobbies(currentHobbies);
       }
       getUser()
     }
   }, [currentUser])
-  
-
- 
+   
   //handle change in the form
   const handleHobbyChange = (e) => {
       const { value, checked} = e.target;
