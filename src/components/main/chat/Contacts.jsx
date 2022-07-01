@@ -1,3 +1,4 @@
+import "./style/contacts.scss";
 import React, { useContext, useState, useEffect } from "react";
 import { UserContext } from "../../../context/user.context";
 import { collection, getDocs, getDoc, doc } from "firebase/firestore";
@@ -33,8 +34,13 @@ function Contacts() {
                         key={index}
                         onClick={() => joinRoom(user.email)}
                         style={{ cursor: "pointer" }}
+                        className="contacts-li"
                     >
-                        {user.displayName ? user.displayName : user.email}
+                        <img src={user.userData?.image} />
+                        <p>
+                            {console.log("userrrrrrr", user)}
+                            {user.displayName ? user.displayName : user.email}
+                        </p>
                     </li>
                 ))}
         </ul>
