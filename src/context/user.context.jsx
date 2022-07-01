@@ -36,7 +36,7 @@ export const UserProvider = ({ children }) => {
     // hobbies of the current user
     const [hobbies, setHobbies] = useState([])
     // Array of ticked checkboxes
-    const [query, setQuery] = useState([])
+    const [query, setQuery] = useState(hobbies)
     const [sortedUsers, setSortedUsers] = useState([]);
 
     const [users, setUsers] = useState([]);

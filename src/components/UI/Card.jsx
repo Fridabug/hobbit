@@ -9,10 +9,12 @@ function Card({imgUrl, name, text, hobbies}) {
       <div className='card-body'>
         <div className='card-title'>{name}</div>
         <div className='card-text'>{text}</div>
-        {hobbies ? hobbies.map((hobby) => <div className='tags'>{hobby}</div>
-        ) : null}
-        <Button name="show profile"/>
+        <div className='tags'>
+          {hobbies ? hobbies.map((hobby) => <span className='tag'>{hobby}</span>
+          ) : null}
+        </div>
       </div>
+        <Button name="show profile" className="card-btn"/>
     </div>
   )
 }

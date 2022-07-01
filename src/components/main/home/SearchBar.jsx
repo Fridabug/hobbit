@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import { UserContext } from "../../../context/user.context";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from '../../../utils/firebase/firebase.utils';
+import './searchBar.scss';
 
 function SearchBar() {
   const {currentUser, setHobbies, hobbies, query, setQuery} = useContext(UserContext);
@@ -35,7 +36,7 @@ function SearchBar() {
 
   return (
     <div>
-      <form>
+      <form className='search-bar'> 
         {hobbies.map((hobby, i) => {
         return(
           <div>

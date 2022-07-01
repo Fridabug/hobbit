@@ -8,13 +8,12 @@ function UserCards() {
   const {currentUser, sortedUsers} = useContext(UserContext);
   
   return (
-    <div>
-      User List
-        {
-          sortedUsers.map((user, key) => {
-            return <Card key={key} name={user.displayName} imgUrl={user.userData.image}>{user.displayName} </Card>
-          })
-        }
+    <div className='card-container'>
+      {
+        sortedUsers.map((user, key) => {
+          return <Card key={key} name={user.displayName} imgUrl={user.userData.image} hobbies={user.userData.hobbies} >{user.displayName} </Card>
+        })
+      }
     </div>
   )
 }
