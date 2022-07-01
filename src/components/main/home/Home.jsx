@@ -8,14 +8,14 @@ function Home() {
   const {currentUser, hobbies} = useContext(UserContext);
   // console.log('hobbies:', hobbies)
   return (
-    <div>
+    <div className='home'>
       {hobbies ? (
         <>
-        <SearchBar/>
         <div className='home-header'>
           <h1>Some great people in your area</h1>
           <h3>Off to your next adventure!</h3>
         </div>
+        <SearchBar/>
         <UserCards/>
         </>
       ) : null}
