@@ -1,21 +1,29 @@
-import './style/sidebar.scss';
-import { useContext, useState, useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
-import { SidebarContext } from '../../../context/SidebarContext';
-import Conversation from './Conversation';
-import Contacts from './Contacts';
-import { auth } from '../../../utils/firebase/firebase.utils';
-import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../../../context/user.context';
-import Button from '../../UI/Button';
+
+import "./style/sidebar.scss";
+import { useContext, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import { SidebarContext } from "../../../context/SidebarContext";
+import Conversation from "./Conversation";
+import Contacts from "./Contacts";
+import { auth } from "../../../utils/firebase/firebase.utils";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../../context/user.context";
+import Button from "../../UI/Button";
+
 // for --> userDate --> here below
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../../utils/firebase/firebase.utils';
 import Context from '../../../context/contextProvider';
 function Sidebar() {
-  const { isContactsOpen } = useContext(SidebarContext);
+
+    const { isContactsOpen } = useContext(SidebarContext);
+
+    const { currentUser, sortedUsers, contacts } = useContext(UserContext);
+
+
   const { setLoggedStatus } = useContext(Context);
-  const { currentUser, sortedUsers } = useContext(UserContext);
+
 
   const navigate = useNavigate();
 
@@ -38,19 +46,26 @@ function Sidebar() {
     }
   }, [currentUser]);
 
-  return (
-    <div className='sidebar-wrapper'>
-      <div className='profile'>
-        <img src={userData?.userData.image} />
-        <h3>{userData?.displayName} </h3>
-      </div>
-      <div className='exit-button'></div>
-      {/* <div className="sidebar-content-container"> */}
-      {isContactsOpen ? <Contacts /> : <Conversation />}
-      <Button onClick={handleLogout} name='logout' className='sidebar-button' />
-      {/* </div> */}
-      <Outlet />
-    </div>
-  );
+
+    return (
+        <div className="sidebar-wrapper">
+            <div className="profile">
+                <Link to="/profile">
+                    <img src={userData?.userData.image} />
+                </Link>
+                <h3>{userData?.displayName} </h3>
+            </div>
+            <div className="exit-button"></div>
+            {/* <div className="sidebar-content-container"> */}
+            {isContactsOpen ? <Contacts /> : <Conversation />}
+            <Button
+                onClick={handleLogout}
+                name="logout"
+                className="sidebar-button"
+            />
+            <Outlet />
+        </div>
+    );
+
 }
 export default Sidebar;
