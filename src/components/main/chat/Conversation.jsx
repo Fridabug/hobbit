@@ -1,7 +1,9 @@
+import "./style/conversation.scss";
 import React, { useContext } from "react";
 import ConversationForm from "./ConversationForm";
 import { ChatContext } from "../../../context/ChatProvider";
 import { UserContext } from "../../../context/user.context";
+import { FaRegWindowClose } from "react-icons/fa";
 function Conversation({ handleChatClose }) {
     const { room, receiver } = useContext(ChatContext);
     const { currentUser } = useContext(UserContext);
@@ -15,15 +17,17 @@ function Conversation({ handleChatClose }) {
                 width: "100%",
             }}
         >
-            {" "}
-            <button
-                onClick={handleChatClose}
-                style={{ width: "20px", alignSelf: "flex-end" }}
-            >
-                X
-            </button>
-            <div>
-                <span>To: {receiver}</span>
+            <div className="close-btn-and-recipient-display-wrapper">
+                <div className="receiver-name-display-warper">
+                    <span>To: {receiver}</span>
+                </div>
+                <button
+                    onClick={handleChatClose}
+                    style={{ width: "20px", alignSelf: "flex-end" }}
+                    className="conversation-closeChat-btn"
+                >
+                    <FaRegWindowClose className="conversation-closeChat-btn-icon" />
+                </button>
             </div>
             <div
                 className="display-msg-container"
@@ -47,10 +51,7 @@ function Conversation({ handleChatClose }) {
                     ))}
                 </div>
             </div>
-            <div
-                className="send-msg-container"
-                style={{ border: "1px solid black" }}
-            >
+            <div className="send-msg-container">
                 <ConversationForm />
             </div>
         </div>

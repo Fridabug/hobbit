@@ -6,6 +6,7 @@ import { db } from "../../../utils/firebase/firebase.utils";
 import { ChatContext } from "../../../context/ChatProvider";
 import "./contacts.styles.scss";
 import { BsFillTrashFill } from "react-icons/bs";
+import { BsFillChatDotsFill } from "react-icons/bs";
 function Contacts() {
     const { joinRoom, clickedChatWhenNotSender, setRoom } =
         useContext(ChatContext);
@@ -33,18 +34,20 @@ function Contacts() {
             {contacts
                 ?.filter((i) => i.email !== currentUser.email)
                 .map((user, index) => (
-                    <li
-                        key={index}
-                        onClick={() => joinRoom(user.email)}
-                        style={{ cursor: "pointer" }}
-                        className="contacts-li"
-                    >
+                    <li key={index} className="contacts-li">
                         <img src={user.userData?.image} />
                         <p>
                             {user.displayName ? user.displayName : user.email}
                         </p>
                         <button onClick={() => handleDeleteFromContacts(index)}>
-                            <BsFillTrashFill className="btn-trash-icon" />
+                            <BsFillTrashFill className="btn-trash-icon icon" />
+                        </button>
+                        <button
+                            className="btn-letsChat-icon icon"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => joinRoom(user.email)}
+                        >
+                            <BsFillChatDotsFill />
                         </button>
                     </li>
                 ))}
