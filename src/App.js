@@ -10,11 +10,11 @@ import Context from './context/contextProvider';
 function App() {
   const { profileSwitch, loggedStatus } = useContext(Context);
 
-
   return (
     <div className='App'>
       {loggedStatus ? (
         <Routes>
+          <Route path='/' element={<Navigate to='/home' />} />
           <Route path='/home' element={<Dashboard />} />
           <Route
             path='/profile'
