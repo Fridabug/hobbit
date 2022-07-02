@@ -1,3 +1,4 @@
+
 import React, { useContext } from "react";
 import { UserContext } from "../../../context/user.context";
 import UserCards from "./UserCards";
@@ -20,6 +21,7 @@ function Home() {
             ) : null}
         </div>
     );
+
 }
 
 export default Home;
