@@ -1,7 +1,7 @@
 
 import React, { useContext, useState } from 'react';
 import Button from '../../UI/Button';
-import './user-card.scss';
+import './style/user-card.scss';
 import { UserContext } from '../../../context/user.context';
 import ShowProfile from './ShowProfile'
 

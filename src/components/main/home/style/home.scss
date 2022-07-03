@@ -1,4 +1,4 @@
-@import '../../../styling/variables';
+@import '../../../../styling/variables';
 
 .home {
     width: 100%;
@@ -17,15 +17,15 @@
     h1 {
         margin: 0 1rem;
         color: $primary;
-        border: solid 1px $primary;
         padding: .5rem .8rem;
-        border-radius: 8px;
+        // border-radius: 8px;
         // box-shadow: 5px 5px 5px lighten($dark, 80%);
     }
 }
 
 #logo {
     font-family: 'Rubik Moonrocks', cursive;;
+    border-bottom: solid 1px $primary;
 }
 
 .logo {

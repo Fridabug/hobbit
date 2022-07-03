@@ -8,7 +8,7 @@ function UserCards() {
 
   return (
     <>
-    <h2>Some great people in your area</h2>
+    <h2 className='search-heading'>Some great people in your area</h2>
       <div className='card-container'>
         {sortedUsers
           ?.filter((i) => i.email !== currentUser?.email)
@@ -24,7 +24,7 @@ function UserCards() {
                 message={user.userData.message}
                 age={user.userData.age}
                 location={user.userData.location}
-              >
+            >
                 {user.displayName}
               </UserCard>
             );

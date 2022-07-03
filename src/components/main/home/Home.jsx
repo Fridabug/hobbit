@@ -3,7 +3,7 @@ import { UserContext } from '../../../context/user.context';
 import UserCards from './UserCards';
 import SearchBar from './SearchBar';
 import NoHobbisYet from './NoHobbisYet';
-import './home.scss';
+import './style/home.scss';
 import {GiOppositeHearts} from'react-icons/gi';
 import {FaUserFriends} from 'react-icons/fa';
 

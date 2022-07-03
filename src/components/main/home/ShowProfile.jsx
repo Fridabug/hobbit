@@ -1,6 +1,6 @@
 import React from 'react'
 import {GoLocation} from 'react-icons/go'
-import './show-profile.styles.scss'
+import './style/show-profile.styles.scss'
 
 function ShowProfile({toggle, userName, message, imgUrl, user, hobbies, age, location}) {
 
