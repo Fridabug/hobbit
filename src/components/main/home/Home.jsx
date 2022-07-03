@@ -4,7 +4,8 @@ import UserCards from './UserCards';
 import SearchBar from './SearchBar';
 import NoHobbisYet from './NoHobbisYet';
 import './home.scss';
-import {BsHeart} from'react-icons/bs';
+import {GiOppositeHearts} from'react-icons/gi';
+import {FaUserFriends} from 'react-icons/fa';
 
 function Home() {
   const { currentUser, hobbies } = useContext(UserContext);
@@ -14,7 +15,9 @@ function Home() {
     <div className='home'>
       <div className='home-header'>
         <div className='logo'>
+           <GiOppositeHearts/>
           <h1 id='logo'>Hobbyt</h1>
+          <FaUserFriends/>
         </div>
       </div>
       {hobbies ? (

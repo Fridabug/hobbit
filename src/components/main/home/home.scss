@@ -15,8 +15,12 @@
     align-items: center;
     justify-content: center;
     h1 {
-        margin: 0 4rem;
+        margin: 0 1rem;
         color: $primary;
+        border: solid 1px $primary;
+        padding: .5rem .8rem;
+        border-radius: 8px;
+        // box-shadow: 5px 5px 5px lighten($dark, 80%);
     }
 }
 
@@ -24,3 +28,11 @@
     font-family: 'Rubik Moonrocks', cursive;;
 }
 
+.logo {
+    display: flex;
+    justify-content: center;
+    svg {
+        color: $primary;
+        margin: auto;
+    }
+}
