@@ -21,6 +21,9 @@ function UserCards() {
                 hobbies={user.userData.hobbies}
                 contactId={user.id}
                 user={user}
+                message={user.userData.message}
+                age={user.userData.age}
+                location={user.userData.location}
               >
                 {user.displayName}
               </UserCard>
@@ -28,7 +31,6 @@ function UserCards() {
           })}
       </div>
     </>
-  );
+  );      
 }
-
 export default UserCards;
