@@ -1,10 +1,26 @@
+@import '../../../styling/variables';
+
 .home {
     width: 100%;
     flex-grow: 1;
+    text-align: center;
 }
 
 .home-header {
-    margin: .6rem;
     text-align: center;
     width: 100%;
+    height: 115px;
+    color: $dark;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    h1 {
+        margin: 0 4rem;
+        color: $primary;
+    }
 }
+
+#logo {
+    font-family: 'Rubik Moonrocks', cursive;;
+}
+

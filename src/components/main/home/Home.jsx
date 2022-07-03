@@ -2,7 +2,9 @@ import React, { useContext, useState } from 'react';
 import { UserContext } from '../../../context/user.context';
 import UserCards from './UserCards';
 import SearchBar from './SearchBar';
+import NoHobbisYet from './NoHobbisYet';
 import './home.scss';
+import {BsHeart} from'react-icons/bs';
 
 function Home() {
   const { currentUser, hobbies } = useContext(UserContext);
@@ -10,16 +12,17 @@ function Home() {
   
   return (
     <div className='home'>
+      <div className='home-header'>
+        <div className='logo'>
+          <h1 id='logo'>Hobbyt</h1>
+        </div>
+      </div>
       {hobbies ? (
         <>
-          <div className='home-header'>
-            <h1>Some great people in your area</h1>
-            <h3>Off to your next adventure!</h3>
-          </div>
           <SearchBar />
           <UserCards />
         </>
-      ) : null}
+      ) : <NoHobbisYet/>}
     </div>
   );
 }
