@@ -6,21 +6,23 @@ import Profile from './components/main/profile/Profile';
 import Authentication from './components/authentication/authentication';
 import EditProfile from './components/main/profile/EditProfile';
 import Context from './context/contextProvider';
-
+import {UserContext} from './context/user.context';
 function App() {
   const { profileSwitch, loggedStatus } = useContext(Context);
-
+  const { currentUser } = useContext(UserContext);
   return (
     <div className='App'>
       {loggedStatus ? (
-        <Routes>
-          <Route path='/' element={<Navigate to='/home' />} />
-          <Route path='/home' element={<Dashboard />} />
-          <Route
-            path='/profile'
-            element={profileSwitch ? <Profile /> : <EditProfile />}
-          />
-        </Routes>
+        currentUser && (
+          <Routes>
+            <Route path='/' element={<Navigate to='/home' />} />
+            <Route path='/home' element={<Dashboard />} />
+            <Route
+              path='/profile'
+              element={profileSwitch ? <Profile /> : <EditProfile />}
+            />
+          </Routes>
+        )
       ) : (
         <Routes>
           <Route path='/' element={<Authentication />} />

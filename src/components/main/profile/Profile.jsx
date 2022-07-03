@@ -41,7 +41,7 @@ const Profile = ({ id }) => {
           <div className='profile__hobbies'>
             <ul>
               {userData?.userData?.hobbies.map((item, index) => (
-                <ProfileHobbies listItem={userData?.userData?.hobbies[index]} />
+                <ProfileHobbies listItem={userData?.userData?.hobbies[index]} key={index} />
               ))}
             </ul>
           </div>

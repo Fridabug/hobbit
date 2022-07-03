@@ -244,6 +244,7 @@ const EditProfile = () => {
             </div>
           </div>
         </div>
+        <button type='submit'>Submit changes</button>
       </form>
     </div>
   ) : null;
