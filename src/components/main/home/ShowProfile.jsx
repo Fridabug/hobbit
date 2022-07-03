@@ -1,15 +1,14 @@
 import React from 'react'
 import {GoLocation} from 'react-icons/go'
-import './show-profle.styles.scss'
+import './show-profile.styles.scss'
 
 function ShowProfile({toggle, userName, message, imgUrl, user, hobbies, age, location}) {
 
   return (
     <>
-        <div className={ toggle ? 'dark' : null }></div>
+        <div className={ toggle ? 'dark' : null } onClick={toggle}></div>
         <div className='modal-two'>
             <div className='modal-content'>
-                <span className='close' onClick={toggle}>x</span>
                 <div className='show-profile'>
                     <div className='profile-pic-container'><img src={imgUrl} alt='profile pic'/></div>
                     <div className='profile-content'>
