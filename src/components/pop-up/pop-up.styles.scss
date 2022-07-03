@@ -30,7 +30,9 @@
   float: right;
 }
 
-.close:hover {
-  color: cyan;
-  cursor: pointer;
+.dark {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(0, 0, 0, .5);
 }

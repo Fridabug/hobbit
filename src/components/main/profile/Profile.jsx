@@ -3,6 +3,8 @@ import { UserContext } from '../../../context/user.context';
 import Context from '../../../context/contextProvider';
 import { db } from '../../../utils/firebase/firebase.utils';
 import { doc, getDoc } from 'firebase/firestore';
+import { Link } from 'react-router-dom';
+import ProfileHobbies from './ProfileHobbies';
 const Profile = ({ id }) => {
   const { currentUser } = useContext(UserContext);
   const { onEditHandler } = useContext(Context);
@@ -31,21 +33,16 @@ const Profile = ({ id }) => {
             </div>
             <div className='profile-top__infos'>
               <h3>
-                {userData?.displayName[0].toUpperCase() +
-                  userData?.displayName.slice(1, userData.length)}
-                , {userData?.userData?.age}
+                {userData?.displayName}, {userData?.userData?.age}
               </h3>
               {userData?.userData?.location}
             </div>
           </div>
           <div className='profile__hobbies'>
             <ul>
-              <li>{userData?.userData?.hobbies[0]}</li>
-
-              <li>{userData?.userData?.hobbies[1]}</li>
-              <li>{userData?.userData?.hobbies[2]}</li>
-              <li>{userData?.userData?.hobbies[3]}</li>
-              <li>{userData?.userData?.hobbies[4]}</li>
+              {userData?.userData?.hobbies.map((item, index) => (
+                <ProfileHobbies listItem={userData?.userData?.hobbies[index]} key={index} />
+              ))}
             </ul>
           </div>
           <div className='profile__about'>
@@ -56,6 +53,8 @@ const Profile = ({ id }) => {
           </div>
         </div>
         <button onClick={onEditHandler}>Edit Profile</button>
+        <Link to='/home
+        '>Home</Link>
       </div>
     )
   );

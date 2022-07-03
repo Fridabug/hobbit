@@ -1,0 +1,38 @@
+@import "./../../styling/variables";
+
+.btn {
+    position: relative;
+    background-color: $primary;
+    border: none;
+    font-size: 1rem;
+    color: $background;
+    padding: 0.5rem 1rem;
+    border-radius: 8%;
+    border-color: darken($primary, 10%);
+    text-align: center;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.6s;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  
+  .btn:after {
+    content: "";
+    background: $primary;
+    display: block;
+    position: absolute;
+    padding-top: 300%;
+    padding-left: 350%;
+    margin-left: -20px!important;
+    margin-top: -120%;
+    opacity: 0;
+    transition: all 1s
+  }
+  
+  .btn:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s
+  }

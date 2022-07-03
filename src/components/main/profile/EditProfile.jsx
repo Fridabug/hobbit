@@ -17,12 +17,15 @@ const EditProfile = () => {
   const [imageUpload, setImageUpload] = useState(false);
   const [image, setImage] = useState(null);
   const [url, setUrl] = useState(null);
+  const [hobby1, hobby2, hobby3, hobby4, hobby5] = [
+    useRef(),
+    useRef(),
+    useRef(),
+    useRef(),
+    useRef(),
+    useRef(),
+  ];
 
-  const hobby1 = useRef();
-  const hobby2 = useRef();
-  const hobby3 = useRef();
-  const hobby4 = useRef();
-  const hobby5 = useRef();
   const location = useRef();
   const message = useRef();
   const age = useRef();
@@ -37,7 +40,7 @@ const EditProfile = () => {
       gettingUser();
     }
   }, [currentUser, showAge, url]);
-
+  console.log(currentUser);
   const onChangeEditHandler = (e) => {
     if (e.target.name.includes('hobby')) {
       setInputValue((pre) => ({
@@ -57,7 +60,6 @@ const EditProfile = () => {
         .then(() => {
           getDownloadURL(imageRef)
             .then((urlImg) => {
-              console.log(urlImg, 'urlImg');
               setUrl(urlImg);
             })
             .catch((error) => console.log(error.message, 'error'));
@@ -90,7 +92,11 @@ const EditProfile = () => {
     }
 
     const newArr = [
-      hobby1.current.value, hobby2.current.value, hobby3.current.value, hobby4.current.value, hobby5.current.value, 
+      hobby1.current.value,
+      hobby2.current.value,
+      hobby3.current.value,
+      hobby4.current.value,
+      hobby5.current.value,
     ];
 
     const hobbyArray = newArr.filter((item) => item.trim().length > 0);
@@ -109,6 +115,7 @@ const EditProfile = () => {
 
     const updateUser = async () => {
       const userDoc = doc(db, 'users', currentUser.uid);
+      console.log(userDoc);
       await updateDoc(userDoc, updatedUser);
     };
     
@@ -140,7 +147,7 @@ const EditProfile = () => {
     maxMonth = '0' + maxMonth;
     minMonth = '0' + minMonth;
   }
-  console.log(userData?.userData);
+
   return userData ? (
     <div className='edit-profile'>
       <form onSubmit={onEditSubmitHandler}>
@@ -157,6 +164,7 @@ const EditProfile = () => {
                 alt=''
               />
               <input
+                required={!userData?.userData?.image && 'required'}
                 type='file'
                 name='image'
                 id='image'
@@ -166,17 +174,12 @@ const EditProfile = () => {
             </div>
             <div className='edit-profile-top__infos'>
               <h3>
-                {userData.displayName
-                  ? userData.displayName[0].toUpperCase() +
-                    userData.displayName
-                      .slice(1, userData.displayName.length)
-                      .toLowerCase()
-                  : 'Franko'}
-                ,
+                {userData.displayName ? userData.displayName : 'Franko'},
                 {userData.userData?.age ? (
                   userData.userData?.age
                 ) : (
                   <input
+                    required
                     type='date'
                     name='date'
                     id='date'
@@ -212,7 +215,9 @@ const EditProfile = () => {
                       id={`hobby${item + 1}`}
                       placeholder={item === 0 ? 'Required' : 'Optional'}
                       defaultValue={
-                        userData?.userData ? userData?.userData?.hobbies[item] : ''
+                        userData?.userData?.hobbies[item]
+                          ? userData.userData.hobbies[item]
+                          : ''
                       }
                       ref={
                         item === 0
@@ -240,12 +245,12 @@ const EditProfile = () => {
                 ref={message}
                 placeholder='You get more chance finding hobby partner if you have some bio (optional)'
               >
-                {userData?.userData?.message ? userData?.userData?.message : ''}
+                {userData?.userData?.message ? userData.userData.message : ''}
               </textarea>
             </div>
           </div>
         </div>
-        <button type='submit'>Apply Changes</button>
+        <button type='submit'>Submit changes</button>
       </form>
     </div>
   ) : null;
