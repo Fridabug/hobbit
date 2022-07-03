@@ -6,7 +6,7 @@ import {
 } from '../../../utils/firebase/firebase.utils';
 
 import FormInput from '../../form-input/form-input';
-import Button from '../../button/button';
+import Button from '../../UI/Button';
 
 import './sign-in-form.styles.scss';
 import { useNavigate } from 'react-router-dom';
@@ -79,16 +79,13 @@ export const SignInForm = ({ handleGoogle }) => {
           value={password}
         />
         <div className='buttons-container'>
-          <Button buttonType={''} type='submit'>
-            Sign In
-          </Button>
+          <Button buttonType={''} type='submit' name="Sign in"/>
           <Button
             type='button'
             onClick={signInWithGoogle}
             buttonType={'google'}
-          >
-            Google Sign-in
-          </Button>
+            name="Google Sign-in"
+          />
         </div>
       </form>
     </div>

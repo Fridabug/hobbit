@@ -16,7 +16,6 @@
     justify-content: center;
     h1 {
         margin: 0 1rem;
-        color: $primary;
         padding: .5rem .8rem;
     }
 }
@@ -26,6 +25,7 @@
     // border-bottom: solid 1px $primary;
     background-color: transparent;
     position: relative;
+    color: $primary;
 }
 
 // #logo::before {
