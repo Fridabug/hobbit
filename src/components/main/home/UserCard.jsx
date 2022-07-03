@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import Button from './Button';
-import './card.scss';
-import { UserContext } from '../../context/user.context';
+import Button from '../../UI/Button';
+import './user-card.scss';
+import { UserContext } from '../../../context/user.context';
 
 function Card({ imgUrl, name, text, hobbies, user }) {
   const { setContacts, contacts } = useContext(UserContext);

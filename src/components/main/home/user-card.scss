@@ -1,9 +1,5 @@
-@import './../../styling/variables';
+@import './../../../styling/variables';
 
-.dashboard {
-  .home {
-  }
-}
 .card-container {
   display: flex;
   width: 100%;
@@ -19,8 +15,12 @@
   border-radius: 5%;
   margin: 0.6rem;
   width: 200px;
-  height: 250px;
+  height: 300px;
   padding: 0.4rem;
+
+  button {
+    margin-bottom: .2rem;
+  }
 }
 
 .card-img {
@@ -32,6 +32,7 @@
 
 .card-body {
   width: 100%;
+  flex-grow: 1;
 }
 
 .card-title {

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { UserContext } from '../../../context/user.context';
-import Card from '../../UI/Card';
+import UserCard from './UserCard';
 
 function UserCards() {
   const { currentUser, sortedUsers} =
@@ -12,7 +12,7 @@ function UserCards() {
         ?.filter((i) => i.email !== currentUser?.email)
         .map((user, key) => {
           return (
-            <Card
+            <UserCard
               key={key}
               name={user.displayName}
               imgUrl={user.userData.image}
@@ -21,7 +21,7 @@ function UserCards() {
               user={user}
             >
               {user.displayName}
-            </Card>
+            </UserCard>
           );
         })}
     </div>
