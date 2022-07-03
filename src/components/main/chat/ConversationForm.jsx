@@ -13,7 +13,7 @@ function ConversationForm() {
                 name="message"
                 placeholder="type your message here"
                 style={{ width: "80%" }}
-                className="send-msg-text-area"
+                className="send-msg-text-area"Card
             ></textarea>
             <button
                 type="submit"
