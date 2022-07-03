@@ -7,6 +7,7 @@ import {
 
 import FormInput from '../../form-input/form-input';
 import Button from '../../button/button';
+
 import './sign-up-form.styles.scss';
 
 const defaultFormFields = {
@@ -15,6 +16,7 @@ const defaultFormFields = {
     password: '',
     confirmPassword: ''
 }
+
 export const SignUpForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
 

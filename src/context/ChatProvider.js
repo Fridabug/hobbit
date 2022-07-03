@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect, useContext } from "react";
+
 import {
     collection,
     getDocs,
@@ -7,9 +8,11 @@ import {
     addDoc,
     deleteDoc,
 } from "firebase/firestore";
-import { UserContext } from "./user.context";
+
 import { db } from "../utils/firebase/firebase.utils";
 import io from "socket.io-client";
+
+import { UserContext } from "./user.context";
 
 import shortid from "shortid";
 

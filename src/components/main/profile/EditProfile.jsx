@@ -9,6 +9,7 @@ import { v4 } from 'uuid';
 const EditProfile = () => {
   const { currentUser } = useContext(UserContext);
   const { onEditHandler } = useContext(Context);
+
   const [userData, setUserData] = useState(null);
   const [userInfo, setUserInfo] = useState({ userData });
   const [inputValue, setInputValue] = useState({});
@@ -16,6 +17,7 @@ const EditProfile = () => {
   const [imageUpload, setImageUpload] = useState(false);
   const [image, setImage] = useState(null);
   const [url, setUrl] = useState(null);
+
   const hobby1 = useRef();
   const hobby2 = useRef();
   const hobby3 = useRef();
@@ -24,6 +26,7 @@ const EditProfile = () => {
   const location = useRef();
   const message = useRef();
   const age = useRef();
+
   useEffect(() => {
     if (currentUser) {
       const docRef = doc(db, 'users', currentUser.uid);
@@ -63,6 +66,7 @@ const EditProfile = () => {
         .catch((error) => console.log(error.message, 'error'));
     }
   };
+
   const onEditSubmitHandler = (e) => {
     e.preventDefault();
 
@@ -86,33 +90,15 @@ const EditProfile = () => {
     }
 
     const newArr = [
-      hobby1.current.value[0].toUpperCase() +
-        hobby1.current.value
-          .slice(1, hobby1.current.value.length)
-          .toLowerCase(),
-      hobby2.current.value[0].toUpperCase() +
-        hobby2.current.value
-          .slice(1, hobby2.current.value.length)
-          .toLowerCase(),
-      hobby3.current.value[0].toUpperCase() +
-        hobby3.current.value
-          .slice(1, hobby3.current.value.length)
-          .toLowerCase(),
-      hobby4.current.value[0].toUpperCase() +
-        hobby4.current.value
-          .slice(1, hobby4.current.value.length)
-          .toLowerCase(),
-      hobby5.current.value[0].toUpperCase() +
-        hobby5.current.value
-          .slice(1, hobby5.current.value.length)
-          .toLowerCase(),
+      hobby1.current.value, hobby2.current.value, hobby3.current.value, hobby4.current.value, hobby5.current.value, 
     ];
+
     const hobbyArray = newArr.filter((item) => item.trim().length > 0);
     const updatedUser = userInfo;
 
     updatedUser.userData = {
       age: userAge,
-      image: url?.length > 0 ? url : userData.userData.image,
+      image: url?.length > 0 ? url : userData?.userData?.image,
       message:
         message.current.value.split(' ').join('').length > 30
           ? message.current.value
@@ -120,10 +106,12 @@ const EditProfile = () => {
       location: location.current.value,
       hobbies: [...hobbyArray],
     };
+
     const updateUser = async () => {
       const userDoc = doc(db, 'users', currentUser.uid);
       await updateDoc(userDoc, updatedUser);
     };
+    
     updateUser();
     onEditHandler();
   };
@@ -203,7 +191,7 @@ const EditProfile = () => {
                 name='location'
                 id='location'
                 defaultValue={
-                  userData.userData ? userData.userData.location : ''
+                  userData?.userData ? userData?.userData?.location : ''
                 }
                 placeholder='Enter your location'
                 onChange={onChangeEditHandler}
@@ -214,17 +202,17 @@ const EditProfile = () => {
           </div>
           <div className='edit-profile__hobbies'>
             <ul>
-              {Array.from(Array(5).keys()).map((item) => {
+              {Array.from(Array(5).keys()).map((item, id) => {
                 return (
-                  <li>
+                  <li key={id}>
                     <span>Hobby{item + 1}</span>
                     <input
                       type='text'
                       name={`hobby${item + 1}`}
                       id={`hobby${item + 1}`}
-                      placeholder={item === 0 ? 'Requierd' : 'Optional'}
+                      placeholder={item === 0 ? 'Required' : 'Optional'}
                       defaultValue={
-                        userData.userData ? userData.userData.hobbies[item] : ''
+                        userData?.userData ? userData?.userData?.hobbies[item] : ''
                       }
                       ref={
                         item === 0
@@ -252,7 +240,7 @@ const EditProfile = () => {
                 ref={message}
                 placeholder='You get more chance finding hobby partner if you have some bio (optional)'
               >
-                {userData.userData.message ? userData?.userData?.message : ''}
+                {userData?.userData?.message ? userData?.userData?.message : ''}
               </textarea>
             </div>
           </div>
