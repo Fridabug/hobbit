@@ -35,7 +35,7 @@ function Card({ imgUrl, name, text, hobbies, user }) {
             : null}
         </div>
       </div>
-      <Button name='show profile' className='card-btn' />
+      <Button name='show profile' className='card-btn secondary' />
       <Button name='Add to chat' className='card-btn' onClick={addContactHandler}>
       </Button>
     </div>
