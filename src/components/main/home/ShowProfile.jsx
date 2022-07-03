@@ -6,7 +6,7 @@ function ShowProfile({toggle, userName, message, imgUrl, user, hobbies, age, loc
 
   return (
     <>
-        <div className={ toggle ? 'dark-mode' : null }></div>
+        <div className={ toggle ? 'dark' : null }></div>
         <div className='modal-two'>
             <div className='modal-content'>
                 <span className='close' onClick={toggle}>x</span>

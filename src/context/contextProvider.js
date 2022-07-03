@@ -1,5 +1,5 @@
 import { createContext, useState } from 'react';
-import useLocalStorage from '../hooks/useLocalStorage';
+import useLocalStorage from 'use-local-storage';
 const Context = createContext();
 export const ContextProvider = ({ children }) => {
   const [loggedStatus, setLoggedStatus] = useLocalStorage(

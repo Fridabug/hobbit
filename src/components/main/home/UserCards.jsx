@@ -1,10 +1,10 @@
-import React, { useContext, useState, useEffect } from "react";
-import { UserContext } from "../../../context/user.context";
-import Card from "../../UI/Card";
+import React, { useContext } from 'react';
+import { UserContext } from '../../../context/user.context';
+import Card from '../../UI/Card';
 
 function UserCards() {
-    const { currentUser, sortedUsers, contacts, setContacts } =
-        useContext(UserContext);
+  const { currentUser, sortedUsers} =
+    useContext(UserContext);
 
     return (
         <div className="card-container">
