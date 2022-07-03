@@ -1,8 +1,27 @@
 .authentication-container {
     display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
 
+    .intro {
+        animation: changeBg 100s infinite; 
+        background-size: cover;
+        height: 100vh;
+        overflow: hidden;
+
+        @keyframes changeBg{
+        0%,100%  {background-image: url("../../../public/img/ardian-lumi-6Woj_wozqmA-unsplash.jpg");}
+        25% {background-image: url("../../../public/img/derek-lamar-nHR8J77KiqU-unsplash.jpg");}
+        50% {background-image: url("../../../public/img/tommy-lisbin-5ROZwhoOBFY-unsplash.jpg");}
+        75% {background-image: url("../../../public/img/kimson-doan-AZMmUy2qL6A-unsplash.jpg");}
+
+    }
     .form-container {
         display: flex;
         flex-flow: column;
+       
+    }
+
     }
 }
