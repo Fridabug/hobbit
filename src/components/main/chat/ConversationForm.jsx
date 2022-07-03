@@ -1,5 +1,7 @@
+import "./style/conversationForm.scss";
 import React, { useContext } from "react";
 import { ChatContext } from "../../../context/ChatProvider";
+import { BiSend } from "react-icons/bi";
 function ConversationForm() {
     const { sendMessage } = useContext(ChatContext);
     return (
@@ -11,9 +13,14 @@ function ConversationForm() {
                 name="message"
                 placeholder="type your message here"
                 style={{ width: "80%" }}
+                className="send-msg-text-area"
             ></textarea>
-            <button type="submit" style={{ width: "20%" }}>
-                Send
+            <button
+                type="submit"
+                className="send-msg-text-area-btn"
+                style={{ width: "20%" }}
+            >
+                <BiSend className="send-msg-btn-icon" />
             </button>
         </form>
     );

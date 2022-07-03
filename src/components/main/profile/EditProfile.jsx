@@ -16,11 +16,15 @@ const EditProfile = () => {
   const [imageUpload, setImageUpload] = useState(false);
   const [image, setImage] = useState(null);
   const [url, setUrl] = useState(null);
-  const hobby1 = useRef();
-  const hobby2 = useRef();
-  const hobby3 = useRef();
-  const hobby4 = useRef();
-  const hobby5 = useRef();
+  const [hobby1, hobby2, hobby3, hobby4, hobby5] = [
+    useRef(),
+    useRef(),
+    useRef(),
+    useRef(),
+    useRef(),
+    useRef(),
+  ];
+
   const location = useRef();
   const message = useRef();
   const age = useRef();
@@ -54,7 +58,6 @@ const EditProfile = () => {
         .then(() => {
           getDownloadURL(imageRef)
             .then((urlImg) => {
-              console.log(urlImg, 'urlImg');
               setUrl(urlImg);
             })
             .catch((error) => console.log(error.message, 'error'));
@@ -155,7 +158,7 @@ const EditProfile = () => {
                 alt=''
               />
               <input
-                required
+                required={!userData?.userData?.image && 'required'}
                 type='file'
                 name='image'
                 id='image'
@@ -241,7 +244,6 @@ const EditProfile = () => {
             </div>
           </div>
         </div>
-        <button type='submit'>Apply Changes</button>
       </form>
     </div>
   ) : null;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
 import {
   signInWithGooglePopUp,
@@ -10,7 +10,7 @@ import Button from '../../button/button';
 
 import './sign-in-form.styles.scss';
 import { useNavigate } from 'react-router-dom';
-
+import Context from '../../../context/contextProvider';
 const defaultFormFields = {
   email: '',
   password: '',
@@ -19,10 +19,9 @@ const defaultFormFields = {
 export const SignInForm = ({ handleGoogle }) => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
-
   const navigate = useNavigate();
+  const { setLoggedStatus} = useContext(Context);
 
-  
   const signInWithGoogle = async () => {
     await signInWithGooglePopUp();
   };
@@ -41,7 +40,8 @@ export const SignInForm = ({ handleGoogle }) => {
 
     try {
       const { user } = await signInAuthWithEmailAndPassword(email, password);
-        navigate('/home');
+      setLoggedStatus(true);
+      navigate('/home');
       resetFormFields();
     } catch (error) {
       switch (error.code) {
@@ -55,7 +55,6 @@ export const SignInForm = ({ handleGoogle }) => {
           console.log(error);
       }
     }
-  
   };
 
   return (
