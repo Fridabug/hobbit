@@ -6,7 +6,7 @@ import {
 } from '../../../utils/firebase/firebase.utils';
 
 import FormInput from '../../form-input/form-input';
-import Button from '../../button/button';
+import Button from '../../UI/Button';
 import './sign-up-form.styles.scss';
 import Context from '../../../context/contextProvider';
 
@@ -97,7 +97,7 @@ export const SignUpForm = () => {
           defaultValue={confirmPassword}
           onChange={handleChange}
         />
-        <Button type='submit'>Sign up</Button>
+        <Button name="Sign in" type='submit'/>
       </form>
     </div>
   );

@@ -1,3 +1,16 @@
+@import '../../../styling/variables';
+
 .sign-in-container {
-    margin: 2rem;
+    width: 100%;
+    margin-bottom: 1rem
+}
+
+input[type=text] {
+    border: 2px solid $primary;
+    border-radius: 5px;
+  }
+
+.buttons-container {
+    display: flex;
+    justify-content: space-between;
 }
