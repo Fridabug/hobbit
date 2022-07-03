@@ -6,26 +6,29 @@ function UserCards() {
   const { currentUser, sortedUsers} =
     useContext(UserContext);
 
-  return (
-    <div className='card-container'>
-      {sortedUsers
-        ?.filter((i) => i.email !== currentUser?.email)
-        .map((user, key) => {
-          return (
-            <Card
-              key={key}
-              name={user.displayName}
-              imgUrl={user.userData.image}
-              hobbies={user.userData.hobbies}
-              contactId={user.id}
-              user={user}
-            >
-              {user.displayName}
-            </Card>
-          );
-        })}
-    </div>
-  );
+    return (
+        <div className="card-container">
+            {sortedUsers
+                ?.filter((i) => i.email !== currentUser.email)
+                .map((user, key) => {
+                    return (
+                        <Card
+                            key={key}
+                            name={user.displayName}
+                            imgUrl={user.userData.image}
+                            hobbies={user.userData.hobbies}
+                            contactId={user.id}
+                            user={user}
+                            message={user.userData.message}
+                            age={user.userData.age}
+                            location={user.userData.location}
+                        >
+                            {user.displayName}
+                        </Card>
+                    );
+                })}
+        </div>
+    );
 }
 
 export default UserCards;

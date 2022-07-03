@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Button from './Button';
 import './card.scss';
 import { UserContext } from '../../context/user.context';
+import ShowProfile from '../main/home/ShowProfile'
 
-function Card({ imgUrl, name, text, hobbies, user }) {
+function Card({ imgUrl, name, text, hobbies, contactId, user, message, age, location }) {
   const { setContacts, contacts } = useContext(UserContext);
 
   const addContactHandler = (e) => {
@@ -13,6 +14,12 @@ function Card({ imgUrl, name, text, hobbies, user }) {
       console.log('works ', user);
     }
   };
+
+  const [toggle, setToggle] = useState(false);
+
+  const togglePopUp = () => {
+      setToggle(!toggle)
+  }
   return (
     <div className='card'>
       <div className='card-img-cont'>
@@ -35,9 +42,10 @@ function Card({ imgUrl, name, text, hobbies, user }) {
             : null}
         </div>
       </div>
-      <Button name='show profile' className='card-btn' />
+      <Button name='show profile' className='card-btn' onClick={togglePopUp}/>
       <Button name='Add to chat' className='card-btn' onClick={addContactHandler}>
       </Button>
+      {toggle ? <ShowProfile toggle={togglePopUp} userName={name} message={message} user={user} hobbies={hobbies} imgUrl={imgUrl} age={age} location={location}/> : null }
     </div>
   );
 }
