@@ -14,7 +14,7 @@ function Contacts() {
 
   const [users, setUsers] = useState([]);
   const userCollection = collection(db, 'users');
-  console.log(contacts);
+  console.log(contacts, 'this is contacts!!');
   useEffect(() => {
     const getUsers = async () => {
       const data = await getDocs(userCollection);
