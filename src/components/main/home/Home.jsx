@@ -4,7 +4,7 @@ import UserCards from './UserCards';
 import SearchBar from './SearchBar';
 import NoHobbisYet from './NoHobbisYet';
 import './style/home.scss';
-import {GiOppositeHearts} from'react-icons/gi';
+import {RiBubbleChartFill} from'react-icons/ri';
 import {FaUserFriends} from 'react-icons/fa';
 
 function Home() {
@@ -15,9 +15,8 @@ function Home() {
     <div className='home'>
       <div className='home-header'>
         <div className='logo'>
-           <GiOppositeHearts/>
           <h1 id='logo'>Hobbyt</h1>
-          <FaUserFriends/>
+           {/* <RiBubbleChartFill/> */}
         </div>
       </div>
       {hobbies ? (
