@@ -1,8 +1,9 @@
+
 import React, { useContext, useState } from 'react';
-import Button from './Button';
-import './card.scss';
-import { UserContext } from '../../context/user.context';
-import ShowProfile from '../main/home/ShowProfile'
+import Button from '../../UI/Button';
+import './style/user-card.scss';
+import { UserContext } from '../../../context/user.context';
+import ShowProfile from './ShowProfile'
 
 function Card({ imgUrl, name, text, hobbies, contactId, user, message, age, location }) {
   const { setContacts, contacts } = useContext(UserContext);
@@ -42,7 +43,7 @@ function Card({ imgUrl, name, text, hobbies, contactId, user, message, age, loca
             : null}
         </div>
       </div>
-      <Button name='show profile' className='card-btn' onClick={togglePopUp}/>
+      <Button name='show profile' className='card-btn secondary' onClick={togglePopUp}/>
       <Button name='Add to chat' className='card-btn' onClick={addContactHandler}>
       </Button>
       {toggle ? <ShowProfile toggle={togglePopUp} userName={name} message={message} user={user} hobbies={hobbies} imgUrl={imgUrl} age={age} location={location}/> : null }

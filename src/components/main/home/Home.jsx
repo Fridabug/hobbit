@@ -2,7 +2,10 @@ import React, { useContext, useState } from 'react';
 import { UserContext } from '../../../context/user.context';
 import UserCards from './UserCards';
 import SearchBar from './SearchBar';
-import './home.scss';
+import NoHobbisYet from './NoHobbisYet';
+import './style/home.scss';
+import {RiBubbleChartFill} from'react-icons/ri';
+import {FaUserFriends} from 'react-icons/fa';
 
 function Home() {
   const { currentUser, hobbies } = useContext(UserContext);
@@ -10,16 +13,18 @@ function Home() {
   
   return (
     <div className='home'>
+      <div className='home-header'>
+        <div className='logo'>
+          <h1 id='logo'>Hobbyt</h1>
+           {/* <RiBubbleChartFill/> */}
+        </div>
+      </div>
       {hobbies ? (
         <>
-          <div className='home-header'>
-            <h1>Some great people in your area</h1>
-            <h3>Off to your next adventure!</h3>
-          </div>
           <SearchBar />
           <UserCards />
         </>
-      ) : null}
+      ) : <NoHobbisYet/>}
     </div>
   );
 }
