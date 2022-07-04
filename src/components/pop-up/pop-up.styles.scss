@@ -1,10 +1,12 @@
+@import '../../styling/variables';
+
 .modal-one {
     position: fixed;
     left: 25%;
     top: 20%;
     z-index: 1;
-    width: 50%;
-    height: 50%;
+    width: 600px;
+    height: 450px;
     background-color: white;
 
     .modal_content {
@@ -16,14 +18,21 @@
         border-radius: 5px;
         border: 2px solid black;
       }
+    
+    h2 {
+      margin-bottom: 1rem;
+    }
   }
   
   .close {
     color: Black;
-    float: right;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 1.5rem;
 
     &:hover {
-        color: cyan;
+        color: $primary;
         cursor: pointer;
     }
   }
