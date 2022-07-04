@@ -1,12 +1,17 @@
-import "./style/contacts.scss";
 import React, { useContext, useState, useEffect } from "react";
-import { UserContext } from "../../../context/user.context";
+
 import { collection, getDocs, getDoc, doc } from "firebase/firestore";
 import { db } from "../../../utils/firebase/firebase.utils";
+
 import { ChatContext } from "../../../context/ChatProvider";
-import "./contacts.styles.scss";
+import { UserContext } from "../../../context/user.context";
+
 import { BsFillTrashFill } from "react-icons/bs";
 import { BsFillChatDotsFill } from "react-icons/bs";
+
+import "./style/contacts.scss";
+import "./contacts.styles.scss";
+
 function Contacts() {
     const { joinRoom, clickedChatWhenNotSender, setRoom } =
         useContext(ChatContext);
@@ -30,7 +35,6 @@ function Contacts() {
         // setRoom(false);
     };
 
-
     return (
         <ul>
             {contacts
@@ -42,6 +46,7 @@ function Contacts() {
                         <img
                             src={user.userData?.image}
                             onClick={() => joinRoom(user.email)}
+                            alt='contact'
                         />
                         <p onClick={() => joinRoom(user.email)}>
                             {user.displayName ? user.displayName : user.email}
@@ -60,9 +65,6 @@ function Contacts() {
                 ))}
         </ul>
     );
-
-
-
 }
 
 export default Contacts;

@@ -1,14 +1,19 @@
-import "./style/editProfile.scss";
 import React, { useContext, useState, useEffect, useRef } from "react";
-import { UserContext } from "../../../context/user.context";
+
 import { db, storage } from "../../../utils/firebase/firebase.utils";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
-import Context from "../../../context/contextProvider";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { v4 } from "uuid";
-import { FiUpload } from "react-icons/fi";
 
+import Context from "../../../context/contextProvider";
+import { UserContext } from "../../../context/user.context";
+
+import { v4 } from "uuid";
+
+import { FiUpload } from "react-icons/fi";
 import { MdDownloadDone } from "react-icons/md";
+
+import "./style/editProfile.scss";
+
 const EditProfile = () => {
     const { currentUser } = useContext(UserContext);
     const { onEditHandler } = useContext(Context);
@@ -101,6 +106,7 @@ const EditProfile = () => {
             hobby4.current.value,
             hobby5.current.value,
         ];
+
         const hobbyArray = newArr.filter((item) => item.trim().length > 0);
         const updatedUser = userInfo;
 
@@ -114,16 +120,18 @@ const EditProfile = () => {
             location: location.current.value,
             hobbies: [...hobbyArray],
         };
+
         const updateUser = async () => {
             const userDoc = doc(db, "users", currentUser.uid);
             console.log(userDoc);
             await updateDoc(userDoc, updatedUser);
         };
+
         updateUser();
         onEditHandler();
     };
 
-    // Imageee upload
+    // Image upload
 
     const maxDate = new Date(
         new Date().setFullYear(new Date().getFullYear() - 18)

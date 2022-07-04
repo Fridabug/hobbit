@@ -1,15 +1,17 @@
 
 import React, { useContext, useState } from 'react';
-import Button from '../../UI/Button';
-import './style/user-card.scss';
 import { UserContext } from '../../../context/user.context';
+
 import ShowProfile from './ShowProfile'
+import Button from '../../UI/Button';
+
+import './style/user-card.scss';
 
 function Card({ imgUrl, name, text, hobbies, contactId, user, message, age, location }) {
   const { setContacts, contacts } = useContext(UserContext);
+  const contactsId = contacts.map((item) => item.id);
 
   const addContactHandler = (e) => {
-    const contactsId = contacts.map((item) => item.id);
     if (contactsId.includes(user.id) === false) {
       setContacts((prev) => [...prev, user]);
       console.log('works ', user);
@@ -22,7 +24,7 @@ function Card({ imgUrl, name, text, hobbies, contactId, user, message, age, loca
       setToggle(!toggle)
   }
   return (
-    <div className='card'>
+    <div className={`card ${contactId}`}>
       <div className='card-img-cont'>
         {imgUrl ? (
           <img className='card-img' src={imgUrl} alt='profile'></img>
@@ -39,12 +41,16 @@ function Card({ imgUrl, name, text, hobbies, contactId, user, message, age, loca
         <div className='card-text'>{text}</div>
         <div className='tags'>
           {hobbies
-            ? hobbies.map((hobby) => <span className='tag'>{hobby}</span>)
+            ? hobbies.map((hobby, id) => <span className='tag' key={id}>{hobby}</span>)
             : null}
         </div>
       </div>
-      <Button name='show profile' className='card-btn secondary' onClick={togglePopUp}/>
-      <Button name='Add to chat' className='card-btn' onClick={addContactHandler}>
+      <Button name='show profile' className='card-btn' onClick={togglePopUp}/>
+      <Button 
+        name={contactsId.includes(user.id) ? 'Added' : 'Add to chat' } 
+        className='card-btn' 
+        onClick={addContactHandler}
+      >
       </Button>
       {toggle ? <ShowProfile toggle={togglePopUp} userName={name} message={message} user={user} hobbies={hobbies} imgUrl={imgUrl} age={age} location={location}/> : null }
     </div>

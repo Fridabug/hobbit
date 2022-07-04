@@ -1,13 +1,15 @@
-import { createContext, useState, useEffect } from "react";
-import {
-    onAuthStateChangedListener,
-    createUserDocumentFromAuth,
-} from "../utils/firebase/firebase.utils";
-import { useNavigate } from "react-router-dom";
+import { createContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../utils/firebase/firebase.utils";
-import useLocalStorage from "use-local-storage";
+import {
+  onAuthStateChangedListener,
+  createUserDocumentFromAuth,
+  db,
+} from '../utils/firebase/firebase.utils';
+import { collection, getDocs } from 'firebase/firestore';
+
+import useLocalStorage from 'use-local-storage';
+
 //actual value you want to access
 export const UserContext = createContext({
     createUser: null,
@@ -17,32 +19,35 @@ export const UserContext = createContext({
 const userCollection = collection(db, "users");
 
 export const UserProvider = ({ children }) => {
-    const [currentUser, setCurrentUser] = useState(null);
-    //from eszter
-    const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
-    const [users, setUsers] = useLocalStorage("users", []);
-    // hobbies of the current user
-    const [hobbies, setHobbies] = useState([]);
-    // Array of ticked checkboxes
-    const [query, setQuery] = useLocalStorage("query", hobbies);
-    const [sortedUsers, setSortedUsers] = useState([]);
-    useEffect(() => {
-        if (currentUser) {
-            const defaultSortedUsers = () => {
-                const filteredUsers = users?.filter(
-                    (user) =>
-                        user?.userData?.hobbies?.some((hobby) => hobby) &&
-                        user.id !== currentUser.uid
-                );
-                setSortedUsers(filteredUsers);
-            };
+  const [currentUser, setCurrentUser] = useState(null);
+  //from eszter
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const [users, setUsers] = useLocalStorage('users', []);
+  // hobbies of the current user
+  const [hobbies, setHobbies] = useState([]);
+  // Array of ticked checkboxes
+  const [query, setQuery] = useLocalStorage('query', hobbies);
+  const [sortedUsers, setSortedUsers] = useState([]);
 
-            defaultSortedUsers();
-        }
-    }, [users]);
-    console.log(sortedUsers);
-    const [contacts, setContacts] = useLocalStorage("contacts", []);
+  useEffect(() => {
+    if (currentUser) {
+      const defaultSortedUsers = () => {
+        const filteredUsers = users?.filter(
+          (user) =>
+            user?.userData?.hobbies?.some((hobby) => hobby) &&
+            user.id !== currentUser.uid
+        );
+        setSortedUsers(filteredUsers);
+      };
+
+      defaultSortedUsers();
+    }
+  }, [users]);
+
+  console.log(sortedUsers, 'sorted users');
+
+  const [contacts, setContacts] = useLocalStorage('contacts', []);
 
     const value = {
         currentUser,

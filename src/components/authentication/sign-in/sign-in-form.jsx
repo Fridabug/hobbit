@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import {
   signInWithGooglePopUp,
@@ -8,9 +9,10 @@ import {
 import FormInput from '../../form-input/form-input';
 import Button from '../../UI/Button';
 
-import './sign-in-form.styles.scss';
-import { useNavigate } from 'react-router-dom';
 import Context from '../../../context/contextProvider';
+
+import './sign-in-form.styles.scss';
+
 const defaultFormFields = {
   email: '',
   password: '',
@@ -79,8 +81,14 @@ export const SignInForm = ({ handleGoogle }) => {
           value={password}
         />
         <div className='buttons-container'>
-          <Button buttonType={''} type='submit' name="Sign in"/>
+          <Button 
+            className='sign-in-button'
+            buttonType={''} 
+            type='submit' 
+            name="Sign in"
+          />
           <Button
+            className='sign-in-button'
             type='button'
             onClick={signInWithGoogle}
             buttonType={'google'}

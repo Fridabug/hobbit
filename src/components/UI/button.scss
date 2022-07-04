@@ -15,35 +15,38 @@
     text-decoration: none;
     overflow: hidden;
     cursor: pointer;
-  }
-  
-  .btn:after {
-    content: "";
-    background: $primary;
-    display: block;
-    position: absolute;
-    border-radius: 5%;
-    padding-top: 300%;
-    padding-left: 350%;
-    margin-left: -20px!important;
-    margin-top: -120%;
-    opacity: 0;
-    transition: all 1s
-  }
-  
-  .btn:active:after {
-    padding: 0;
-    margin: 0;
-    opacity: 1;
-    transition: 0s
-  }
 
-  .small-btn {
-    font-size: .8rem;
-    padding: .3rem .5rem;
-  }
+    &:hover {
+      background-color: $highlight;
+    }
 
-  .secondary {
-    background-color: lighten($dark, 80%);
-    color: $dark;
-  }
+    &:after {
+      content: "";
+      background: $primary;
+      display: block;
+      position: absolute;
+      padding-top: 300%;
+      padding-left: 350%;
+      margin-left: -20px!important;
+      margin-top: -120%;
+      opacity: 0;
+      transition: all 1s
+    }
+
+    &:active:after {
+      padding: 0;
+      margin: 0;
+      opacity: 1;
+      transition: 0s
+    }
+}
+
+.small-btn {
+  font-size: .8rem;
+  padding: .3rem .5rem;
+}
+
+.secondary {
+  background-color: lighten($dark, 80%);
+  color: $dark;
+}

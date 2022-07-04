@@ -39,17 +39,16 @@ console.log(query)
       <form className='search-bar'>
         {hobbies.map((hobby, i) => {
           return (
-            <div>
+            <div key={i}>
               <input
                 type='checkbox'
-                key={i}
                 id={hobby}
                 name='hobby'
                 value={hobby}
                 onClick={handleHobbyChange}
                 defaultChecked={true}
               />
-              <label for={hobby}>{hobby}</label>
+              <label htmlFor={hobby}>{hobby}</label>
             </div>
           );
         })}

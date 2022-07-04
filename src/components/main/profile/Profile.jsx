@@ -1,13 +1,19 @@
-import "./style/profile.scss";
 import { useContext, useEffect, useState } from "react";
+
 import { UserContext } from "../../../context/user.context";
 import Context from "../../../context/contextProvider";
+
 import { db } from "../../../utils/firebase/firebase.utils";
 import { doc, getDoc } from "firebase/firestore";
+
 import { Link } from "react-router-dom";
+
 import ProfileHobbies from "./ProfileHobbies";
+
 import { GoHome } from "react-icons/go";
 import { RiFileEditLine } from "react-icons/ri";
+
+import "./style/profile.scss";
 const Profile = ({ id }) => {
     const { currentUser } = useContext(UserContext);
     const { onEditHandler } = useContext(Context);
