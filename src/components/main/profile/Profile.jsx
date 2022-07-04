@@ -1,10 +1,15 @@
 import { useContext, useEffect, useState } from 'react';
-import { UserContext } from '../../../context/user.context';
-import Context from '../../../context/contextProvider';
+
 import { db } from '../../../utils/firebase/firebase.utils';
 import { doc, getDoc } from 'firebase/firestore';
+
+import { UserContext } from '../../../context/user.context';
+import Context from '../../../context/contextProvider';
+
 import { Link } from 'react-router-dom';
+
 import ProfileHobbies from './ProfileHobbies';
+
 const Profile = ({ id }) => {
   const { currentUser } = useContext(UserContext);
   const { onEditHandler } = useContext(Context);

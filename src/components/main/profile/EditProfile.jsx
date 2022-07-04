@@ -1,10 +1,13 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
-import { UserContext } from '../../../context/user.context';
+
 import { db, storage } from '../../../utils/firebase/firebase.utils';
 import { doc, updateDoc, getDoc } from 'firebase/firestore';
-import Context from '../../../context/contextProvider';
+
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { v4 } from 'uuid';
+
+import Context from '../../../context/contextProvider';
+import { UserContext } from '../../../context/user.context';
 
 const EditProfile = () => {
   const { currentUser } = useContext(UserContext);

@@ -49,8 +49,8 @@ export const SignUpForm = () => {
         password
       );
       await createUserDocumentFromAuth(user, { displayName });
-      navigate('/profile');
       onEditHandler();
+      navigate('/profile');
       resetFormFields();
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {

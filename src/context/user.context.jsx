@@ -1,13 +1,15 @@
 import { createContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import {
   onAuthStateChangedListener,
   createUserDocumentFromAuth,
+  db,
 } from '../utils/firebase/firebase.utils';
-import { useNavigate } from 'react-router-dom';
-
 import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../utils/firebase/firebase.utils';
+
 import useLocalStorage from 'use-local-storage';
+
 //actual value you want to access
 export const UserContext = createContext({
   createUser: null,
@@ -27,6 +29,7 @@ export const UserProvider = ({ children }) => {
   // Array of ticked checkboxes
   const [query, setQuery] = useLocalStorage('query', hobbies);
   const [sortedUsers, setSortedUsers] = useState([]);
+
   useEffect(() => {
     if (currentUser) {
       const defaultSortedUsers = () => {
@@ -41,7 +44,9 @@ export const UserProvider = ({ children }) => {
       defaultSortedUsers();
     }
   }, [users]);
-  console.log(sortedUsers);
+
+  console.log(sortedUsers, 'sorted users');
+
   const [contacts, setContacts] = useLocalStorage('contacts', []);
 
   const value = {
