@@ -1,4 +1,5 @@
 @import "../../../../styling/variables";
+
 .contacts-li {
     display: flex;
     justify-content: space-between;
@@ -39,18 +40,19 @@
     .contacts-links {
         position: absolute;
         display: flex;
+
         top: 50%;
         width: 50px;
     }
     .icon {
         font-size: 1.2rem;
-        color: white;
+        color: $background;
         -webkit-transition-duration: 0.4s; /* Safari */
         transition: 0.2s linear;
     }
 
     .icon:hover {
-        font-size: 1.3rem;
+        color: $highlight;
     }
 
 }
