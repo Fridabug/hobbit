@@ -32,18 +32,20 @@ function Card({
       };
       gettingUser();
     }
-  }, [currentUser,contacts]);
+  }, [currentUser, contacts]);
   const addContactHandler = (e) => {
-    const contactsId1 = contacts.map((item) => item.id);
-    if (contactsId1.includes(user.id) === false) {
-      setContacts((prev) => [...prev, user]);
-      const updatedUser = userData1;
-      updatedUser.contacts = [...contacts, user];
-      const updateUser = async () => {
-        const userDoc = doc(db, 'users', currentUser.uid);
-        await updateDoc(userDoc, updatedUser);
-      };
-      updateUser();
+    if (contacts) {
+      const contactsId1 = contacts && contacts.map((item) => item.id);
+      if (contactsId1.includes(user.id) === false) {
+        setContacts((prev) => [...prev, user]);
+        const updatedUser = userData1;
+        updatedUser.contacts = [...contacts, user];
+        const updateUser = async () => {
+          const userDoc = doc(db, 'users', currentUser.uid);
+          await updateDoc(userDoc, updatedUser);
+        };
+        updateUser();
+      }
     }
   };
 
@@ -52,7 +54,7 @@ function Card({
   const togglePopUp = () => {
     setToggle(!toggle);
   };
-  console.log(contactsId);
+
   return (
     <div className='card'>
       <div className='card-img-cont'>
@@ -86,6 +88,7 @@ function Card({
       />
       <Button
         name={
+          contactsId &&
           contactsId
             .map((item) => {
               return item.id;
