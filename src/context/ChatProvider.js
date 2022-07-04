@@ -8,14 +8,14 @@ import {
     addDoc,
     deleteDoc,
     updateDoc,
-    onSnapshot, 
+    onSnapshot,
     query,
-    where
+    where,
 } from "firebase/firestore";
 
 import { db } from "../utils/firebase/firebase.utils";
 import io from "socket.io-client";
-import useLocalStorage from 'use-local-storage';
+import useLocalStorage from "use-local-storage";
 
 import { UserContext } from "./user.context";
 
@@ -32,28 +32,19 @@ export const ChatProvider = ({ children }) => {
     const [unread, setUnread] = useState(false);
     const [notifications, setNotifications] = useState([]);
     const [chatDocs, setChatDocs] = useState(null);
-    
-    console.log(unread);
-
     const { currentUser } = useContext(UserContext);
 
+    // for message notifications
 
-// for message notifications
-
-const getChatDocs = async () => {
-    const chatDocs = await collection(db, 'chats');
-    const chatSnapshot = await getDocs(chatDocs);
-    const room = chatSnapshot.docs
-    .map((doc) => {
-        const docID = doc.id;
-        return { doc: doc.data(), docID };
-    })
-    setChatDocs(room);
-}
-
-    console.log(notifications, 'notifications');
-    console.log((unread, 'this is from unread'))
-
+    const getChatDocs = async () => {
+        const chatDocs = await collection(db, "chats");
+        const chatSnapshot = await getDocs(chatDocs);
+        const room = chatSnapshot.docs.map((doc) => {
+            const docID = doc.id;
+            return { doc: doc.data(), docID };
+        });
+        setChatDocs(room);
+    };
     useEffect(() => {
         socket.on("receive_message", (data) => {
             setRoom((state) => {
@@ -83,22 +74,22 @@ const getChatDocs = async () => {
             );
 
         if (room) {
-            const messages = room.doc.messages.map(message => {
-                if(message.isRead === false) {
+            const messages = room.doc.messages.map((message) => {
+                if (message.isRead === false) {
                     message.isRead = true;
                 }
                 return message;
             });
             const chatsCol = await doc(db, "chats", room.docID);
-            await updateDoc(chatsCol, {messages});
-            
-            console.log(chatDocs, 'chatDocs')
-            const updateChatDocs = chatDocs.map(chatDoc => {
-                if(chatDoc.doc.id === room.doc.id) {
+            await updateDoc(chatsCol, { messages });
+
+            console.log(chatDocs, "chatDocs");
+            const updateChatDocs = chatDocs.map((chatDoc) => {
+                if (chatDoc.doc.id === room.doc.id) {
                     chatDoc.doc.messages = messages;
                 }
-                return chatDoc
-            })
+                return chatDoc;
+            });
 
             setRoom(room.doc);
             setRoomID(room.docID);
@@ -110,10 +101,10 @@ const getChatDocs = async () => {
             const newChat = {
                 messages: [
                     {
-                        content: "Hey there 👋",
+                        content: "",
                         sender: "Bot",
                         date: new Date().toString(),
-                        isRead: false
+                        isRead: false,
                     },
                 ],
                 receiver: receiver,
@@ -144,7 +135,7 @@ const getChatDocs = async () => {
             content,
             date: new Date().toDateString(),
             sender: currentUser?.email,
-            isRead: false
+            isRead: false,
         };
         setRoom((state) => ({ ...state, messages: [...state.messages, data] }));
         e.target.reset();
@@ -162,11 +153,11 @@ const getChatDocs = async () => {
         room,
         sendMessage,
         setRoom,
-        unread, 
+        unread,
         setUnread,
-        notifications, 
+        notifications,
         setNotifications,
-        chatDocs
+        chatDocs,
     };
     return (
         <ChatContext.Provider value={value}>{children}</ChatContext.Provider>
