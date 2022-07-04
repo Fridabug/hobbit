@@ -2,15 +2,9 @@
 
 .sign-in-container {
     width: 100%;
-    margin-bottom: 1rem
+    margin-bottom: .5rem;
 }
 
-input[type=text] {
-    border: 2px solid $primary;
-    border-radius: 5px;
-  }
-
-.buttons-container {
-    display: flex;
-    justify-content: space-between;
+.sign-in-button {
+    width: 49%;
 }

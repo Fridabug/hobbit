@@ -3,12 +3,13 @@ import { useState, useContext } from 'react';
 import { SignUpForm } from './sign-up/sign-up-form';
 import { SignInForm } from './sign-in/sign-in-form';
 import Intro from './intro'
-import { UserContext } from '../../context/user.context';
 
 import Button from '../UI/Button';
 import PopUp from '../pop-up/pop-up';
 
-import "./authentication.styles.scss";
+import { UserContext } from '../../context/user.context';
+
+import './authentication.styles.scss'
 
 const Authentication = () => {
     const { currentUser } = useContext(UserContext);

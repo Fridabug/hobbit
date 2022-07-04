@@ -29,8 +29,8 @@
             75% {background-image: url("../../../public/img/kimson-doan-AZMmUy2qL6A-unsplash.jpg");}
 
         }
-        
     }
+    
     .form-container {
         display: flex;
         flex-direction: column;
@@ -41,6 +41,11 @@
 
     .register {
         background-color: $highlight;
-        align-self: flex-start;
+        align-self: flex-end;
+        width: 49%;
+
+        &:hover {
+            background-color: $dark;
+        }
     }
 }

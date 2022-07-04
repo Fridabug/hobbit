@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect, useContext } from "react";
+
 import {
     collection,
     getDocs,
@@ -11,10 +12,12 @@ import {
     query,
     where
 } from "firebase/firestore";
-import { UserContext } from "./user.context";
+
 import { db } from "../utils/firebase/firebase.utils";
 import io from "socket.io-client";
 import useLocalStorage from 'use-local-storage';
+
+import { UserContext } from "./user.context";
 
 import shortid from "shortid";
 

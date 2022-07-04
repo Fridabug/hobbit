@@ -1,5 +1,6 @@
 import { createContext, useState } from 'react';
 import useLocalStorage from 'use-local-storage';
+
 const Context = createContext();
 export const ContextProvider = ({ children }) => {
   const [loggedStatus, setLoggedStatus] = useLocalStorage(
@@ -8,7 +9,9 @@ export const ContextProvider = ({ children }) => {
   );
   const [profileSwitch, setProfileSwitch] = useState(true);
   const onEditHandler = () => {
+
     setProfileSwitch((pre) => (pre = !pre));
+    // console.log(profileSwitch);
   };
   return (
     <Context.Provider
