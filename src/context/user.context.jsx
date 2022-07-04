@@ -12,11 +12,11 @@ import useLocalStorage from 'use-local-storage';
 
 //actual value you want to access
 export const UserContext = createContext({
-  createUser: null,
-  setCurrentUser: () => null,
+    createUser: null,
+    setCurrentUser: () => null,
 });
 
-const userCollection = collection(db, 'users');
+const userCollection = collection(db, "users");
 
 export const UserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -49,50 +49,54 @@ export const UserProvider = ({ children }) => {
 
   const [contacts, setContacts] = useLocalStorage('contacts', []);
 
-  const value = {
-    currentUser,
-    setCurrentUser,
-    users,
-    hobbies,
-    setHobbies,
-    query,
-    setQuery,
-    sortedUsers,
-    contacts,
-    setContacts,
-  };
-  // const value = { currentUser, setCurrentUser, users };
-
-  useEffect(() => {
-    const getUsers = async () => {
-      const data = await getDocs(userCollection);
-      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    const value = {
+        currentUser,
+        setCurrentUser,
+        users,
+        hobbies,
+        setHobbies,
+        query,
+        setQuery,
+        sortedUsers,
+        contacts,
+        setContacts,
     };
+    // const value = { currentUser, setCurrentUser, users };
 
-    getUsers();
-  }, []);
+    useEffect(() => {
+        const getUsers = async () => {
+            const data = await getDocs(userCollection);
+            setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        };
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChangedListener((user) => {
-      if (user) {
-        createUserDocumentFromAuth(user);
-      }
-      setCurrentUser(user);
-    });
+        getUsers();
+    }, []);
 
-    return unsubscribe;
-  }, []);
+    useEffect(() => {
+        const unsubscribe = onAuthStateChangedListener((user) => {
+            if (user) {
+                createUserDocumentFromAuth(user);
+            }
+            setCurrentUser(user);
+        });
 
-  // Hobbies
+        return unsubscribe;
+    }, []);
 
-  useEffect(() => {
-    if (currentUser) {
-      const usersArr = users.filter((user) =>
-        user?.userData?.hobbies?.some((hobby) => query.includes(hobby))
-      );
-      //   console.log('usersArr: ', usersArr)
-      setSortedUsers(usersArr);
-    }
-  }, [query]);
-  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+    // Hobbies
+
+    useEffect(() => {
+        if (currentUser) {
+            const usersArr = users.filter((user) =>
+                user?.userData?.hobbies?.some((hobby) =>
+                    query.includes(hobby.toLowerCase())
+                )
+            );
+            //   console.log('usersArr: ', usersArr)
+            setSortedUsers(usersArr);
+        }
+    }, [query]);
+    return (
+        <UserContext.Provider value={value}>{children}</UserContext.Provider>
+    );
 };

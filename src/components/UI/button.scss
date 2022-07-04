@@ -7,7 +7,7 @@
     font-size: 1rem;
     color: $background;
     padding: 0.5rem 1rem;
-    border-radius: 8%;
+    border-radius: 5%;
     border-color: darken($primary, 10%);
     text-align: center;
     -webkit-transition-duration: 0.4s; /* Safari */
@@ -39,4 +39,14 @@
       opacity: 1;
       transition: 0s
     }
+}
+
+.small-btn {
+  font-size: .8rem;
+  padding: .3rem .5rem;
+}
+
+.secondary {
+  background-color: lighten($dark, 80%);
+  color: $dark;
 }

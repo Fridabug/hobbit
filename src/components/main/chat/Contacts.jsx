@@ -39,7 +39,7 @@ function Contacts() {
   };
  
   return (
-    <ul>
+    <ul className='contact-list'>
       {contacts
         ?.filter((contact,i) => {
       
@@ -49,16 +49,18 @@ function Contacts() {
           <li key={index} className='contacts-li'>
             <img src={user.userData?.image} />
             <p>{user.displayName ? user.displayName : user.email}</p>
-            <button onClick={() => handleDeleteFromContacts(index)}>
-              <BsFillTrashFill className='btn-trash-icon icon' />
-            </button>
-            <button
-              className='btn-letsChat-icon icon'
-              style={{ cursor: 'pointer' }}
-              onClick={() => joinRoom(user.email)}
-            >
-              <BsFillChatDotsFill />
-            </button>
+            <div className='contact-links'>
+              <button onClick={() => handleDeleteFromContacts(index)}>
+                <BsFillTrashFill className='btn-trash-icon icon' />
+              </button>
+              <button
+                
+                style={{ cursor: 'pointer' }}
+                onClick={() => joinRoom(user.email)}
+              >
+                <BsFillChatDotsFill className='btn-letsChat-icon icon'/>
+              </button>
+            </div>
           </li>
         ))}
     </ul>
