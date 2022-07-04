@@ -26,6 +26,8 @@ export const UserProvider = ({ children }) => {
   const [users, setUsers] = useLocalStorage('users', []);
   // hobbies of the current user
   const [hobbies, setHobbies] = useState([]);
+  // const [contacts, setContacts] = useLocalStorage('contacts', []);
+  const [contacts, setContacts] = useState([]);
   // Array of ticked checkboxes
   const [query, setQuery] = useLocalStorage('query', hobbies);
   const [sortedUsers, setSortedUsers] = useState([]);
@@ -38,6 +40,7 @@ export const UserProvider = ({ children }) => {
             user?.userData?.hobbies?.some((hobby) => hobby) &&
             user.id !== currentUser.uid
         );
+        setContacts(currentUser.contacts);
         setSortedUsers(filteredUsers);
       };
 
@@ -47,7 +50,7 @@ export const UserProvider = ({ children }) => {
 
   console.log(sortedUsers, 'sorted users');
 
-  const [contacts, setContacts] = useLocalStorage('contacts', []);
+
 
     const value = {
         currentUser,

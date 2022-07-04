@@ -73,6 +73,7 @@ export const createUserDocumentFromAuth = async (
         displayName,
         email,
         createdAt,
+        contacts: [],
         ...additionalInformation,
         id: shortid.generate()
       });

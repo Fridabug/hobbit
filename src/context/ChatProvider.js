@@ -31,43 +31,20 @@ export const ChatProvider = ({ children }) => {
     const [sender, setSender] = useState(null);
     const [unread, setUnread] = useState(false);
     const [notifications, setNotifications] = useState([]);
-
-    console.log(unread);
-
+    const [chatDocs, setChatDocs] = useState(null);
     const { currentUser } = useContext(UserContext);
 
     // for message notifications
 
-    useEffect(() => {
-        if (currentUser) {
-            const filteredMessages = query(
-                collection(db, "chats"),
-                where("receiver", "==", currentUser.email)
-            );
-            const newNotifications = onSnapshot(
-                filteredMessages,
-                (snapshot) => {
-                    snapshot.docChanges().forEach((change) => {
-                        if (change.type === "added") {
-                            setNotifications((prev) => [
-                                ...prev,
-                                change.doc.data(),
-                            ]);
-                            if (notifications.length !== 0) {
-                                setUnread(true);
-                            }
-                        }
-                    });
-                }
-            );
-        }
-    }, [currentUser]);
-
-    console.log(notifications);
-    console.log((unread, "this is from unread"));
-
-    //-----
-
+    const getChatDocs = async () => {
+        const chatDocs = await collection(db, "chats");
+        const chatSnapshot = await getDocs(chatDocs);
+        const room = chatSnapshot.docs.map((doc) => {
+            const docID = doc.id;
+            return { doc: doc.data(), docID };
+        });
+        setChatDocs(room);
+    };
     useEffect(() => {
         socket.on("receive_message", (data) => {
             setRoom((state) => {
@@ -77,6 +54,7 @@ export const ChatProvider = ({ children }) => {
                 };
             });
         });
+        getChatDocs();
     }, []);
     const joinRoom = async (receiver) => {
         const chatsCol = collection(db, "chats");
@@ -96,9 +74,28 @@ export const ChatProvider = ({ children }) => {
             );
 
         if (room) {
+            const messages = room.doc.messages.map((message) => {
+                if (message.isRead === false) {
+                    message.isRead = true;
+                }
+                return message;
+            });
+            const chatsCol = await doc(db, "chats", room.docID);
+            await updateDoc(chatsCol, { messages });
+
+            console.log(chatDocs, "chatDocs");
+            const updateChatDocs = chatDocs.map((chatDoc) => {
+                if (chatDoc.doc.id === room.doc.id) {
+                    chatDoc.doc.messages = messages;
+                }
+                return chatDoc;
+            });
+
             setRoom(room.doc);
             setRoomID(room.docID);
+            await socket.emit("send_message", {});
             socket.emit("join_room", room.id);
+            setChatDocs(updateChatDocs);
         } else {
             const id = shortid.generate();
             const newChat = {
@@ -106,7 +103,8 @@ export const ChatProvider = ({ children }) => {
                     {
                         content: "",
                         sender: "Bot",
-                        date: "", // new Date().toString(),
+                        date: new Date().toString(),
+                        isRead: false,
                     },
                 ],
                 receiver: receiver,
@@ -137,6 +135,7 @@ export const ChatProvider = ({ children }) => {
             content,
             date: new Date().toDateString(),
             sender: currentUser?.email,
+            isRead: false,
         };
         setRoom((state) => ({ ...state, messages: [...state.messages, data] }));
         e.target.reset();
@@ -158,6 +157,7 @@ export const ChatProvider = ({ children }) => {
         setUnread,
         notifications,
         setNotifications,
+        chatDocs,
     };
     return (
         <ChatContext.Provider value={value}>{children}</ChatContext.Provider>
