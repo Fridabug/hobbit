@@ -66,7 +66,10 @@ export const SignUpForm = () => {
   return (
     <div className='sign-up-container'>
       <h2>Register here</h2>
-      <form onSubmit={handleSubmit}>
+      <form 
+        onSubmit={handleSubmit}
+        className='form-container'
+      >
         <FormInput
           label='Username'
           type='text'
@@ -101,7 +104,11 @@ export const SignUpForm = () => {
           defaultValue={confirmPassword}
           onChange={handleChange}
         />
-        <Button name="Sign in" type='submit' className="close-btn"/>
+        <Button 
+          name="Sign Up" 
+          type='submit' 
+          className="sign-up-btn"
+        />
       </form>
     </div>
   );
