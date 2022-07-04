@@ -1,3 +1,4 @@
+
 import React, { useContext, useState, useEffect } from "react";
 
 import { collection, getDocs, getDoc, doc,updateDoc } from "firebase/firestore";
@@ -5,7 +6,6 @@ import { db } from "../../../utils/firebase/firebase.utils";
 
 import { ChatContext } from "../../../context/ChatProvider";
 import { UserContext } from "../../../context/user.context";
-
 import { BsFillTrashFill } from "react-icons/bs";
 import { BsFillChatDotsFill } from "react-icons/bs";
 
@@ -13,12 +13,29 @@ import "./style/contacts.scss";
 import "./contacts.styles.scss";
 
 function Contacts() {
-  const { joinRoom } = useContext(ChatContext);
+  const { room, joinRoom, chatDocs } = useContext(ChatContext);
   const { currentUser, contacts, setContacts } =
   useContext(UserContext);
   const [users, setUsers] = useState([]);
   const userCollection = collection(db, 'users');
+  console.log(contacts, 'this is contacts!!');
+
   const [userData, setUserData] = useState([]);
+  
+
+  const UpdateNotifications = ({email}) => {
+   
+    const chat = chatDocs?.find(
+      (doc) => 
+          (doc?.doc?.receiver === email)
+  );
+    const unreadMessages = chat?.doc?.messages?.filter(message => message.isRead === false).length;
+  console.log(unreadMessages, 'update notifications');
+
+
+    return (<span>{unreadMessages === 0 ? <span></span> : <span>{unreadMessages}</span>}</span>)
+  }
+
   useEffect(() => {
     const docRef = doc(db, 'users', currentUser.uid);
     const gettingUser = async () => {
@@ -35,6 +52,8 @@ function Contacts() {
     gettingUser();
     getUsers();
   }, [currentUser]);
+
+  console.log(room, 'this is room');
 
   const handleDeleteFromContacts = (index) => {
     const updatedContacts = contacts.filter((contact, i) => index !== i);
@@ -72,10 +91,10 @@ function Contacts() {
               className="btn-letsChat-icon icon"
               style={{ cursor: "pointer" }}
               onClick={() => joinRoom(user.email)}
-          >
-              <BsFillChatDotsFill />
-          </button>
-      </li>
+            >
+              <BsFillChatDotsFill /><span>{chatDocs && <UpdateNotifications email={user.email}/>}</span>
+            </button>
+          </li>
         ))}
     </ul>
   );
