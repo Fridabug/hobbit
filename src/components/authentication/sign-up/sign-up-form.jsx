@@ -97,7 +97,7 @@ export const SignUpForm = () => {
           defaultValue={confirmPassword}
           onChange={handleChange}
         />
-        <Button name="Sign in" type='submit'/>
+        <Button name="Sign in" type='submit' className="close-btn"/>
       </form>
     </div>
   );
