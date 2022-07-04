@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import {
   createUserDocumentFromAuth,
   createUserAuthWithEmailAndPassword,
@@ -7,7 +8,9 @@ import {
 
 import FormInput from '../../form-input/form-input';
 import Button from '../../UI/Button';
+
 import './sign-up-form.styles.scss';
+
 import Context from '../../../context/contextProvider';
 
 const defaultFormFields = {
@@ -16,6 +19,7 @@ const defaultFormFields = {
   password: '',
   confirmPassword: '',
 };
+
 export const SignUpForm = () => {
   const { onEditHandler } = useContext(Context);
   const [formFields, setFormFields] = useState(defaultFormFields);
@@ -47,8 +51,8 @@ export const SignUpForm = () => {
         password
       );
       await createUserDocumentFromAuth(user, { displayName });
-      navigate('/profile');
       onEditHandler();
+      navigate('/profile');
       resetFormFields();
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
@@ -62,7 +66,10 @@ export const SignUpForm = () => {
   return (
     <div className='sign-up-container'>
       <h2>Register here</h2>
-      <form onSubmit={handleSubmit}>
+      <form 
+        onSubmit={handleSubmit}
+        className='form-container'
+      >
         <FormInput
           label='Username'
           type='text'
@@ -97,7 +104,11 @@ export const SignUpForm = () => {
           defaultValue={confirmPassword}
           onChange={handleChange}
         />
-        <Button name="Sign in" type='submit'/>
+        <Button 
+          name="Sign Up" 
+          type='submit' 
+          className="sign-up-btn"
+        />
       </form>
     </div>
   );

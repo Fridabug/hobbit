@@ -1,20 +1,22 @@
 import { createContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import {
   onAuthStateChangedListener,
   createUserDocumentFromAuth,
+  db,
 } from '../utils/firebase/firebase.utils';
-import { useNavigate } from 'react-router-dom';
-
 import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../utils/firebase/firebase.utils';
+
 import useLocalStorage from 'use-local-storage';
+
 //actual value you want to access
 export const UserContext = createContext({
-  createUser: null,
-  setCurrentUser: () => null,
+    createUser: null,
+    setCurrentUser: () => null,
 });
 
-const userCollection = collection(db, 'users');
+const userCollection = collection(db, "users");
 
 export const UserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -29,6 +31,7 @@ export const UserProvider = ({ children }) => {
   // Array of ticked checkboxes
   const [query, setQuery] = useLocalStorage('query', hobbies);
   const [sortedUsers, setSortedUsers] = useState([]);
+
   useEffect(() => {
     if (currentUser) {
       const defaultSortedUsers = () => {
@@ -45,42 +48,45 @@ export const UserProvider = ({ children }) => {
     }
   }, [users]);
 
-  const value = {
-    currentUser,
-    setCurrentUser,
-    users,
-    hobbies,
-    setHobbies,
-    query,
-    setQuery,
-    sortedUsers,
-    contacts,
-    setContacts,
-  };
-  // const value = { currentUser, setCurrentUser, users };
+  console.log(sortedUsers, 'sorted users');
 
-  useEffect(() => {
-    const getUsers = async () => {
-      const data = await getDocs(userCollection);
-      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  const [contacts, setContacts] = useLocalStorage('contacts', []);
+
+    const value = {
+        currentUser,
+        setCurrentUser,
+        users,
+        hobbies,
+        setHobbies,
+        query,
+        setQuery,
+        sortedUsers,
+        contacts,
+        setContacts,
     };
+    // const value = { currentUser, setCurrentUser, users };
 
-    getUsers();
-  }, []);
+    useEffect(() => {
+        const getUsers = async () => {
+            const data = await getDocs(userCollection);
+            setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        };
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChangedListener((user) => {
-      if (user) {
-        createUserDocumentFromAuth(user);
-      }
-      setCurrentUser(user);
-    });
+        getUsers();
+    }, []);
 
-    return unsubscribe;
-  }, []);
+    useEffect(() => {
+        const unsubscribe = onAuthStateChangedListener((user) => {
+            if (user) {
+                createUserDocumentFromAuth(user);
+            }
+            setCurrentUser(user);
+        });
 
-  // Hobbies
+        return unsubscribe;
+    }, []);
 
+<<<<<<< HEAD
   useEffect(() => {
     if (currentUser) {
       const usersArr = users.filter((user) =>
@@ -93,4 +99,22 @@ export const UserProvider = ({ children }) => {
     }
   }, [query]);
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+=======
+    // Hobbies
+
+    useEffect(() => {
+        if (currentUser) {
+            const usersArr = users.filter((user) =>
+                user?.userData?.hobbies?.some((hobby) =>
+                    query.includes(hobby.toLowerCase())
+                )
+            );
+            //   console.log('usersArr: ', usersArr)
+            setSortedUsers(usersArr);
+        }
+    }, [query]);
+    return (
+        <UserContext.Provider value={value}>{children}</UserContext.Provider>
+    );
+>>>>>>> 9e688b06ec8bc60d395fd1d47022f417cba1db2d
 };

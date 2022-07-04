@@ -1,21 +1,20 @@
-import './style/contacts.scss';
-import React, { useContext, useState, useEffect } from 'react';
-import { UserContext } from '../../../context/user.context';
-import {
-  collection,
-  getDocs,
-  getDoc,
-  doc,
-  updateDoc,
-} from 'firebase/firestore';
-import { db } from '../../../utils/firebase/firebase.utils';
-import { ChatContext } from '../../../context/ChatProvider';
-import './contacts.styles.scss';
-import { BsFillTrashFill } from 'react-icons/bs';
-import { BsFillChatDotsFill } from 'react-icons/bs';
+import React, { useContext, useState, useEffect } from "react";
+
+import { collection, getDocs, getDoc, doc,updateDoc } from "firebase/firestore";
+import { db } from "../../../utils/firebase/firebase.utils";
+
+import { ChatContext } from "../../../context/ChatProvider";
+import { UserContext } from "../../../context/user.context";
+
+import { BsFillTrashFill } from "react-icons/bs";
+import { BsFillChatDotsFill } from "react-icons/bs";
+
+import "./style/contacts.scss";
+import "./contacts.styles.scss";
+
 function Contacts() {
   const { joinRoom } = useContext(ChatContext);
-  const { currentUser, setCurrentUser, contacts, setContacts } =
+  const { currentUser, contacts, setContacts } =
   useContext(UserContext);
   const [users, setUsers] = useState([]);
   const userCollection = collection(db, 'users');
@@ -57,23 +56,29 @@ function Contacts() {
           return contact.email !== currentUser?.email;
         })
         .map((user, index) => (
-          <li key={index} className='contacts-li'>
-            <img src={user.userData?.image} alt='profile' />
-            <p>{user.displayName ? user.displayName : user.email}</p>
-            <button onClick={() => handleDeleteFromContacts(index)}>
-              <BsFillTrashFill className='btn-trash-icon icon' />
-            </button>
-            <button
-              className='btn-letsChat-icon icon'
-              style={{ cursor: 'pointer' }}
+          <li key={index} className="contacts-li">
+          <img
+              src={user.userData?.image}
               onClick={() => joinRoom(user.email)}
-            >
+              alt='contact'
+          />
+          <p onClick={() => joinRoom(user.email)}>
+              {user.displayName ? user.displayName : user.email}
+          </p>
+          <button onClick={() => handleDeleteFromContacts(index)}>
+              <BsFillTrashFill className="btn-trash-icon icon" />
+          </button>
+          <button
+              className="btn-letsChat-icon icon"
+              style={{ cursor: "pointer" }}
+              onClick={() => joinRoom(user.email)}
+          >
               <BsFillChatDotsFill />
-            </button>
-          </li>
+          </button>
+      </li>
         ))}
     </ul>
   );
-}
+        }
 
 export default Contacts;

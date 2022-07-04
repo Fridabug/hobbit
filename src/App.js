@@ -1,12 +1,15 @@
 import { useContext } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+
 import Dashboard from './components/main/chat/Dashboard';
 import Home from './components/main/home/Home';
 import Profile from './components/main/profile/Profile';
 import Authentication from './components/authentication/authentication';
 import EditProfile from './components/main/profile/EditProfile';
+
 import Context from './context/contextProvider';
 import {UserContext} from './context/user.context';
+
 function App() {
   const { profileSwitch, loggedStatus } = useContext(Context);
   const { currentUser } = useContext(UserContext);
