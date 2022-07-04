@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { UserContext } from '../../../context/user.context';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../../utils/firebase/firebase.utils';
-import './searchBar.scss';
+import './style/searchBar.scss';
 
 function SearchBar() {
   const { currentUser, setHobbies, hobbies, query, setQuery } =

@@ -1,11 +1,11 @@
+
 import React, { useContext, useState } from 'react';
+import { UserContext } from '../../../context/user.context';
 
-import { UserContext } from '../../context/user.context';
+import ShowProfile from './ShowProfile'
+import Button from '../../UI/Button';
 
-import ShowProfile from '../main/home/ShowProfile'
-import Button from './Button';
-
-import './card.scss';
+import './style/user-card.scss';
 
 function Card({ imgUrl, name, text, hobbies, contactId, user, message, age, location }) {
   const { setContacts, contacts } = useContext(UserContext);

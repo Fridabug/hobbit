@@ -8,6 +8,7 @@ import Contacts from './Contacts';
 import { auth } from '../../../utils/firebase/firebase.utils';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../../context/user.context';
+import {ChatContext} from '../../../context/ChatProvider.js'
 import Button from '../../UI/Button';
 
 // for --> userDate --> here below
@@ -22,7 +23,10 @@ function Sidebar() {
 
   const { setLoggedStatus } = useContext(Context);
 
+  const { unread, setUnread, notifications, setNotifications, joinRoom} = useContext(ChatContext);
+
   const navigate = useNavigate();
+
   useEffect(() => {
     if (currentUser) {
       const docRef = doc(db, 'users', currentUser.uid);
@@ -41,6 +45,11 @@ function Sidebar() {
   };
   // uri: get user data --> i wasn't sure if to put it in the context so i added it here to the file
 
+
+  const handleNotifications = () => {
+    setNotifications([]);
+    setUnread(false);
+  }
   return (
     
     userData?.userData && (
@@ -52,6 +61,14 @@ function Sidebar() {
           <h3>{userData?.displayName} </h3>
         </div>
         <div className='exit-button'></div>
+        <div>
+          <span>new message from </span>
+          {notifications.map(notification => 
+          <div>
+            <span>{notification.sender}</span>
+          </div>)} 
+        <button onClick={handleNotifications}>ok</button>
+        </div>
         {/* <div className="sidebar-content-container"> */}
         {isContactsOpen ? <Contacts /> : <Conversation />}
         <Button

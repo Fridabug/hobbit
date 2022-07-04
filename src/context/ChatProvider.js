@@ -8,10 +8,14 @@ import {
     addDoc,
     deleteDoc,
     updateDoc,
+    onSnapshot, 
+    query,
+    where
 } from "firebase/firestore";
 
 import { db } from "../utils/firebase/firebase.utils";
 import io from "socket.io-client";
+import useLocalStorage from 'use-local-storage';
 
 import { UserContext } from "./user.context";
 
@@ -25,7 +29,37 @@ export const ChatProvider = ({ children }) => {
     const [room, setRoom] = useState(null);
     const [receiver, setReceiver] = useState(null);
     const [sender, setSender] = useState(null);
+    const [unread, setUnread] = useState(false);
+    const [notifications, setNotifications] = useState([]);
+    
+    console.log(unread);
+
     const { currentUser } = useContext(UserContext);
+
+
+// for message notifications
+
+    useEffect(() => {
+        if(currentUser) {
+            const filteredMessages = query(collection(db, 'chats'), where('receiver', '==', currentUser.email))
+            const newNotifications = onSnapshot(filteredMessages, (snapshot) => {
+                snapshot.docChanges().forEach((change) => {
+                    if(change.type === 'added') {
+                        setNotifications(prev => ([...prev, change.doc.data()]));
+                        if(notifications.length !== 0) {
+                            setUnread(true);
+                        } 
+                    }
+                })
+            })
+            
+        }
+    }, [currentUser])     
+
+    console.log(notifications);
+    console.log((unread, 'this is from unread'))
+
+    //-----
 
     useEffect(() => {
         socket.on("receive_message", (data) => {
@@ -113,6 +147,10 @@ export const ChatProvider = ({ children }) => {
         room,
         sendMessage,
         setRoom,
+        unread, 
+        setUnread,
+        notifications, 
+        setNotifications
     };
     return (
         <ChatContext.Provider value={value}>{children}</ChatContext.Provider>

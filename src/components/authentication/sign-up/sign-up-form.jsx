@@ -1,14 +1,16 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import {
   createUserDocumentFromAuth,
   createUserAuthWithEmailAndPassword,
 } from '../../../utils/firebase/firebase.utils';
 
 import FormInput from '../../form-input/form-input';
-import Button from '../../button/button';
+import Button from '../../UI/Button';
 
 import './sign-up-form.styles.scss';
+
 import Context from '../../../context/contextProvider';
 
 const defaultFormFields = {
@@ -99,7 +101,7 @@ export const SignUpForm = () => {
           defaultValue={confirmPassword}
           onChange={handleChange}
         />
-        <Button type='submit'>Sign up</Button>
+        <Button name="Sign in" type='submit' className="close-btn"/>
       </form>
     </div>
   );

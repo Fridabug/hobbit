@@ -4,7 +4,7 @@ import { SignUpForm } from './sign-up/sign-up-form';
 import { SignInForm } from './sign-in/sign-in-form';
 import Intro from './intro'
 
-import Button from '../button/button';
+import Button from '../UI/Button';
 import PopUp from '../pop-up/pop-up';
 
 import { UserContext } from '../../context/user.context';
@@ -29,11 +29,12 @@ const Authentication = () => {
         <div className='authentication-container'>
             <Intro />
             <div className='form-container'>
+            <div className='logo'>
+                <h1 id='logo'>Hobbyt</h1>
+                {/* <RiBubbleChartFill/> */}
+                </div>
                 <SignInForm />
-                <Button onClick={togglePopUp}>
-                    Register
-                </Button>
-                
+                <Button className='register' onClick={togglePopUp} name="Register"/>
             </div>
             { toggle ? <PopUp toggle={togglePopUp} content={<SignUpForm />}/> : null }
         </div>
