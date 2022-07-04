@@ -12,7 +12,9 @@ function Card({ imgUrl, name, text, hobbies, contactId, user, message, age, loca
     const contactsId = contacts.map((item) => item.id);
     if (contactsId.includes(user.id) === false) {
       setContacts((prev) => [...prev, user]);
-      console.log('works ', user);
+      console.log(contactsId, 'contactId');
+      console.log(user.id, 'userId');
+      console.log(contacts);
     }
   };
 

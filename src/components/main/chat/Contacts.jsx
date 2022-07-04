@@ -8,13 +8,28 @@ import './contacts.styles.scss';
 import { BsFillTrashFill } from 'react-icons/bs';
 import { BsFillChatDotsFill } from 'react-icons/bs';
 function Contacts() {
-  const { joinRoom, clickedChatWhenNotSender, setRoom } =
+  const { room, joinRoom, chatDocs } =
     useContext(ChatContext);
   const { currentUser, contacts, setContacts } = useContext(UserContext);
 
   const [users, setUsers] = useState([]);
   const userCollection = collection(db, 'users');
   console.log(contacts, 'this is contacts!!');
+  
+
+  const UpdateNotifications = ({email}) => {
+   
+    const chat = chatDocs?.find(
+      (doc) => 
+          (doc?.doc?.receiver === email)
+  );
+    const unreadMessages = chat?.doc?.messages?.filter(message => message.isRead === false).length;
+  console.log(unreadMessages, 'update notifications');
+
+
+    return (<span>{unreadMessages === 0 ? <span></span> : <span>{unreadMessages}</span>}</span>)
+  }
+
   useEffect(() => {
     const getUsers = async () => {
       const data = await getDocs(userCollection);
@@ -23,6 +38,8 @@ function Contacts() {
 
     getUsers();
   }, []);
+
+  console.log(room, 'this is room');
 
   const handleDeleteFromContacts = (index) => {
  
@@ -50,7 +67,7 @@ function Contacts() {
               style={{ cursor: 'pointer' }}
               onClick={() => joinRoom(user.email)}
             >
-              <BsFillChatDotsFill />
+              <BsFillChatDotsFill /><span>{chatDocs && <UpdateNotifications email={user.email}/>}</span>
             </button>
           </li>
         ))}
