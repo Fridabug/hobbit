@@ -44,6 +44,7 @@ function Sidebar() {
     console.log('hmmm');
     await auth.signOut();
     navigate('/');
+    // localStorage.clear();
     setLoggedStatus(false);
   };
   // uri: get user data --> i wasn't sure if to put it in the context so i added it here to the file
@@ -69,13 +70,7 @@ function Sidebar() {
           </div>
         </div>
         <div className='exit-button'></div>
-        <div>
-          <span>new message from </span>
-          {notifications.map(notification => 
-          <div>
-            <span>{notification.sender}</span>
-          </div>)} 
-        <button onClick={handleNotifications}>ok</button>
+        <div> 
         </div>
         {/* <div className="sidebar-content-container"> */}
         {isContactsOpen ? <Contacts /> : <Conversation />}

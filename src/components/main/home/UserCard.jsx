@@ -33,21 +33,22 @@ function Card({
       gettingUser();
     }
   }, [currentUser, contacts]);
+
   const addContactHandler = (e) => {
-    if (contacts) {
-      const contactsId1 = contacts && contacts.map((item) => item.id);
-      if (contactsId1.includes(user.id) === false) {
-        setContacts((prev) => [...prev, user]);
-        const updatedUser = userData1;
-        updatedUser.contacts = [...contacts, user];
-        const updateUser = async () => {
-          const userDoc = doc(db, 'users', currentUser.uid);
-          await updateDoc(userDoc, updatedUser);
-        };
-        updateUser();
-      }
+    const contactsId1 = contacts?.map((item) => item.id);
+    if (contactsId1.includes(user.id) === false) {
+      setContacts((prev) => [...prev, user]);
+      const updatedUser = userData1;
+      updatedUser.contacts = [...contacts, user];
+      const updateUser = async () => {
+        const userDoc = doc(db, 'users', currentUser.uid);
+        await updateDoc(userDoc, updatedUser);
+      };
+      updateUser();
     }
   };
+
+  console.log(contacts, 'contacts')
 
   const [toggle, setToggle] = useState(false);
 
@@ -88,9 +89,7 @@ function Card({
       />
       <Button
         name={
-          contactsId &&
-          contactsId
-            .map((item) => {
+          contactsId?.map((item) => {
               return item.id;
             })
             .includes(user.id)
