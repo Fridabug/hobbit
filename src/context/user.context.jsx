@@ -50,7 +50,7 @@ export const UserProvider = ({ children }) => {
 
   console.log(sortedUsers, 'sorted users');
 
-  const [contacts, setContacts] = useLocalStorage('contacts', []);
+
 
     const value = {
         currentUser,
@@ -86,20 +86,6 @@ export const UserProvider = ({ children }) => {
         return unsubscribe;
     }, []);
 
-<<<<<<< HEAD
-  useEffect(() => {
-    if (currentUser) {
-      const usersArr = users.filter((user) =>
-        user?.userData?.hobbies?.some((hobby) =>
-          query.includes(hobby.toLowerCase())
-        )
-      );
-      //   console.log('usersArr: ', usersArr)
-      setSortedUsers(usersArr);
-    }
-  }, [query]);
-  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
-=======
     // Hobbies
 
     useEffect(() => {
@@ -116,5 +102,4 @@ export const UserProvider = ({ children }) => {
     return (
         <UserContext.Provider value={value}>{children}</UserContext.Provider>
     );
->>>>>>> 9e688b06ec8bc60d395fd1d47022f417cba1db2d
 };

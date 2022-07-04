@@ -1,11 +1,12 @@
-<<<<<<< HEAD
 import React, { useContext, useState, useEffect } from 'react';
-import Button from '../../UI/Button';
-import './style/user-card.scss';
 import { UserContext } from '../../../context/user.context';
+
 import ShowProfile from './ShowProfile';
+import Button from '../../UI/Button';
 import { doc, updateDoc, getDoc } from 'firebase/firestore';
 import { db, storage } from '../../../utils/firebase/firebase.utils';
+import './style/user-card.scss';
+
 function Card({
   imgUrl,
   name,
@@ -19,37 +20,22 @@ function Card({
 }) {
   const { setContacts, contacts, currentUser } = useContext(UserContext);
   const [userData1, setUserData1] = useState(null);
+  const [contactsId, setContactsId] = useState([]);
+
   useEffect(() => {
     if (currentUser) {
       const docRef = doc(db, 'users', currentUser.uid);
       const gettingUser = async () => {
         const data = await getDoc(docRef);
         setUserData1(data.data());
+        setContactsId(data.data().contacts);
       };
       gettingUser();
     }
-  }, [currentUser]);
-  console.log(userData1);
+  }, [currentUser,contacts]);
   const addContactHandler = (e) => {
-    const contactsId = contacts.map((item) => item.id);
-
-=======
-
-import React, { useContext, useState } from 'react';
-import { UserContext } from '../../../context/user.context';
-
-import ShowProfile from './ShowProfile'
-import Button from '../../UI/Button';
-
-import './style/user-card.scss';
-
-function Card({ imgUrl, name, text, hobbies, contactId, user, message, age, location }) {
-  const { setContacts, contacts } = useContext(UserContext);
-  const contactsId = contacts.map((item) => item.id);
-
-  const addContactHandler = (e) => {
->>>>>>> 9e688b06ec8bc60d395fd1d47022f417cba1db2d
-    if (contactsId.includes(user.id) === false) {
+    const contactsId1 = contacts.map((item) => item.id);
+    if (contactsId1.includes(user.id) === false) {
       setContacts((prev) => [...prev, user]);
       const updatedUser = userData1;
       updatedUser.contacts = [...contacts, user];
@@ -66,8 +52,9 @@ function Card({ imgUrl, name, text, hobbies, contactId, user, message, age, loca
   const togglePopUp = () => {
     setToggle(!toggle);
   };
+  console.log(contactsId);
   return (
-    <div className={`card ${contactId}`}>
+    <div className='card'>
       <div className='card-img-cont'>
         {imgUrl ? (
           <img className='card-img' src={imgUrl} alt='profile'></img>
@@ -84,18 +71,29 @@ function Card({ imgUrl, name, text, hobbies, contactId, user, message, age, loca
         <div className='card-text'>{text}</div>
         <div className='tags'>
           {hobbies
-            ? hobbies.map((hobby, id) => <span className='tag' key={id}>{hobby}</span>)
+            ? hobbies.map((hobby, id) => (
+                <span className='tag' key={id}>
+                  {hobby}
+                </span>
+              ))
             : null}
         </div>
       </div>
-<<<<<<< HEAD
       <Button
         name='show profile'
         className='card-btn secondary'
         onClick={togglePopUp}
       />
       <Button
-        name='Add to chat'
+        name={
+          contactsId
+            .map((item) => {
+              return item.id;
+            })
+            .includes(user.id)
+            ? 'Added'
+            : 'Add to chat'
+        }
         className='card-btn'
         onClick={addContactHandler}
       ></Button>
@@ -111,16 +109,6 @@ function Card({ imgUrl, name, text, hobbies, contactId, user, message, age, loca
           location={location}
         />
       ) : null}
-=======
-      <Button name='show profile' className='card-btn' onClick={togglePopUp}/>
-      <Button 
-        name={contactsId.includes(user.id) ? 'Added' : 'Add to chat' } 
-        className='card-btn' 
-        onClick={addContactHandler}
-      >
-      </Button>
-      {toggle ? <ShowProfile toggle={togglePopUp} userName={name} message={message} user={user} hobbies={hobbies} imgUrl={imgUrl} age={age} location={location}/> : null }
->>>>>>> 9e688b06ec8bc60d395fd1d47022f417cba1db2d
     </div>
   );
 }
