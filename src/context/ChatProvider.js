@@ -8,14 +8,14 @@ import {
     addDoc,
     deleteDoc,
     updateDoc,
-    onSnapshot, 
+    onSnapshot,
     query,
-    where
+    where,
 } from "firebase/firestore";
 
 import { db } from "../utils/firebase/firebase.utils";
 import io from "socket.io-client";
-import useLocalStorage from 'use-local-storage';
+import useLocalStorage from "use-local-storage";
 
 import { UserContext } from "./user.context";
 
@@ -31,33 +31,40 @@ export const ChatProvider = ({ children }) => {
     const [sender, setSender] = useState(null);
     const [unread, setUnread] = useState(false);
     const [notifications, setNotifications] = useState([]);
-    
+
     console.log(unread);
 
     const { currentUser } = useContext(UserContext);
 
-
-// for message notifications
+    // for message notifications
 
     useEffect(() => {
-        if(currentUser) {
-            const filteredMessages = query(collection(db, 'chats'), where('receiver', '==', currentUser.email))
-            const newNotifications = onSnapshot(filteredMessages, (snapshot) => {
-                snapshot.docChanges().forEach((change) => {
-                    if(change.type === 'added') {
-                        setNotifications(prev => ([...prev, change.doc.data()]));
-                        if(notifications.length !== 0) {
-                            setUnread(true);
-                        } 
-                    }
-                })
-            })
-            
+        if (currentUser) {
+            const filteredMessages = query(
+                collection(db, "chats"),
+                where("receiver", "==", currentUser.email)
+            );
+            const newNotifications = onSnapshot(
+                filteredMessages,
+                (snapshot) => {
+                    snapshot.docChanges().forEach((change) => {
+                        if (change.type === "added") {
+                            setNotifications((prev) => [
+                                ...prev,
+                                change.doc.data(),
+                            ]);
+                            if (notifications.length !== 0) {
+                                setUnread(true);
+                            }
+                        }
+                    });
+                }
+            );
         }
-    }, [currentUser])     
+    }, [currentUser]);
 
     console.log(notifications);
-    console.log((unread, 'this is from unread'))
+    console.log((unread, "this is from unread"));
 
     //-----
 
@@ -97,9 +104,9 @@ export const ChatProvider = ({ children }) => {
             const newChat = {
                 messages: [
                     {
-                        content: "Hey there 👋",
+                        content: "",
                         sender: "Bot",
-                        date: new Date().toString(),
+                        date: "", // new Date().toString(),
                     },
                 ],
                 receiver: receiver,
@@ -147,10 +154,10 @@ export const ChatProvider = ({ children }) => {
         room,
         sendMessage,
         setRoom,
-        unread, 
+        unread,
         setUnread,
-        notifications, 
-        setNotifications
+        notifications,
+        setNotifications,
     };
     return (
         <ChatContext.Provider value={value}>{children}</ChatContext.Provider>
