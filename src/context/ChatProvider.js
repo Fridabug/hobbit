@@ -56,9 +56,6 @@ export const ChatProvider = ({ children }) => {
         }
     }, [currentUser])     
 
-    console.log(notifications);
-    console.log((unread, 'this is from unread'))
-
     //-----
 
     useEffect(() => {
