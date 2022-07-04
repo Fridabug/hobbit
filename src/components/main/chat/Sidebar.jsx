@@ -17,11 +17,11 @@ import { db } from '../../../utils/firebase/firebase.utils';
 import Context from '../../../context/contextProvider';
 function Sidebar() {
   const { isContactsOpen } = useContext(SidebarContext);
-
+  
   const { currentUser, sortedUsers, contacts } = useContext(UserContext);
   const [userData, setUserData] = useState(null);
 
-  const { setLoggedStatus } = useContext(Context);
+  const { setLoggedStatus, onEditHandler } = useContext(Context);
 
   const { unread, setUnread, notifications, setNotifications, joinRoom} = useContext(ChatContext);
 
@@ -58,7 +58,12 @@ function Sidebar() {
           <Link to='/profile'>
             <img src={userData.userData?.image} alt='profile' />
           </Link>
-          <h3>{userData?.displayName} </h3>
+          <div className='column'>
+            <h3>{userData?.displayName} </h3>
+            <Link to="/profile">
+              <Button className='small-btn secondary' onClick={onEditHandler} name="Edit Profile"></Button>
+            </Link>
+          </div>
         </div>
         <div className='exit-button'></div>
         <div>
