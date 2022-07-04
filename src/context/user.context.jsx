@@ -24,6 +24,8 @@ export const UserProvider = ({ children }) => {
   const [users, setUsers] = useLocalStorage('users', []);
   // hobbies of the current user
   const [hobbies, setHobbies] = useState([]);
+  // const [contacts, setContacts] = useLocalStorage('contacts', []);
+  const [contacts, setContacts] = useState([]);
   // Array of ticked checkboxes
   const [query, setQuery] = useLocalStorage('query', hobbies);
   const [sortedUsers, setSortedUsers] = useState([]);
@@ -35,14 +37,13 @@ export const UserProvider = ({ children }) => {
             user?.userData?.hobbies?.some((hobby) => hobby) &&
             user.id !== currentUser.uid
         );
+        setContacts(currentUser.contacts);
         setSortedUsers(filteredUsers);
       };
 
       defaultSortedUsers();
     }
   }, [users]);
-  console.log(sortedUsers);
-  const [contacts, setContacts] = useLocalStorage('contacts', []);
 
   const value = {
     currentUser,
@@ -83,7 +84,9 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     if (currentUser) {
       const usersArr = users.filter((user) =>
-        user?.userData?.hobbies?.some((hobby) => query.includes(hobby))
+        user?.userData?.hobbies?.some((hobby) =>
+          query.includes(hobby.toLowerCase())
+        )
       );
       //   console.log('usersArr: ', usersArr)
       setSortedUsers(usersArr);

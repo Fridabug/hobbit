@@ -110,7 +110,7 @@ const EditProfile = () => {
     };
     const updateUser = async () => {
       const userDoc = doc(db, 'users', currentUser.uid);
-      console.log(userDoc);
+  
       await updateDoc(userDoc, updatedUser);
     };
     updateUser();

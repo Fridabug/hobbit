@@ -1,26 +1,54 @@
-
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Button from '../../UI/Button';
 import './style/user-card.scss';
 import { UserContext } from '../../../context/user.context';
-import ShowProfile from './ShowProfile'
-
-function Card({ imgUrl, name, text, hobbies, contactId, user, message, age, location }) {
-  const { setContacts, contacts } = useContext(UserContext);
-
+import ShowProfile from './ShowProfile';
+import { doc, updateDoc, getDoc } from 'firebase/firestore';
+import { db, storage } from '../../../utils/firebase/firebase.utils';
+function Card({
+  imgUrl,
+  name,
+  text,
+  hobbies,
+  contactId,
+  user,
+  message,
+  age,
+  location,
+}) {
+  const { setContacts, contacts, currentUser } = useContext(UserContext);
+  const [userData1, setUserData1] = useState(null);
+  useEffect(() => {
+    if (currentUser) {
+      const docRef = doc(db, 'users', currentUser.uid);
+      const gettingUser = async () => {
+        const data = await getDoc(docRef);
+        setUserData1(data.data());
+      };
+      gettingUser();
+    }
+  }, [currentUser]);
+  console.log(userData1);
   const addContactHandler = (e) => {
     const contactsId = contacts.map((item) => item.id);
+
     if (contactsId.includes(user.id) === false) {
       setContacts((prev) => [...prev, user]);
-      console.log('works ', user);
+      const updatedUser = userData1;
+      updatedUser.contacts = [...contacts, user];
+      const updateUser = async () => {
+        const userDoc = doc(db, 'users', currentUser.uid);
+        await updateDoc(userDoc, updatedUser);
+      };
+      updateUser();
     }
   };
 
   const [toggle, setToggle] = useState(false);
 
   const togglePopUp = () => {
-      setToggle(!toggle)
-  }
+    setToggle(!toggle);
+  };
   return (
     <div className='card'>
       <div className='card-img-cont'>
@@ -43,10 +71,28 @@ function Card({ imgUrl, name, text, hobbies, contactId, user, message, age, loca
             : null}
         </div>
       </div>
-      <Button name='show profile' className='card-btn secondary' onClick={togglePopUp}/>
-      <Button name='Add to chat' className='card-btn' onClick={addContactHandler}>
-      </Button>
-      {toggle ? <ShowProfile toggle={togglePopUp} userName={name} message={message} user={user} hobbies={hobbies} imgUrl={imgUrl} age={age} location={location}/> : null }
+      <Button
+        name='show profile'
+        className='card-btn secondary'
+        onClick={togglePopUp}
+      />
+      <Button
+        name='Add to chat'
+        className='card-btn'
+        onClick={addContactHandler}
+      ></Button>
+      {toggle ? (
+        <ShowProfile
+          toggle={togglePopUp}
+          userName={name}
+          message={message}
+          user={user}
+          hobbies={hobbies}
+          imgUrl={imgUrl}
+          age={age}
+          location={location}
+        />
+      ) : null}
     </div>
   );
 }
